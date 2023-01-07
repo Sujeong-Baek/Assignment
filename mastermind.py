@@ -5,9 +5,9 @@
 import random
 
 MAX_NUM_GUESSES = 10
-SECRET_LENGTH = 3
+SECRET_LENGTH = 4
 
-# A-F까지에서 겹치지 않도록 랜덤하게 4개 고르기
+# A-F까지에서 (겹치지 않도록) 랜덤하게 4개 고르기
 def create_secret(): #ABAB
     c = "ABCDEF"
     secret = ""
@@ -21,7 +21,7 @@ def create_secret(): #ABAB
 # guess가 규칙에 맞는지 확인
 # 1. 길이가 4인지 확인. 틀리면 "Your guess must have four letters"
 # 2. 글자에 A - F 외의 글자가 있는지 확인. 틀리면 "You can only use letters A, B, C, D, E, and F."
-# 3. 중복된 글자가 있는지 확인. 틀리면 "All letters must be distinct."
+# (3. 중복된 글자가 있는지 확인. 틀리면 "All letters must be distinct.")
 # Returns (ok: Boolean, message : String) 
 def check_guess(guess):
     if len(guess) != SECRET_LENGTH:
@@ -50,17 +50,27 @@ def get_guess():
 #     pos=0
 #     let=0
 #     for i in range(SECRET_LENGTH): # 0,1,2,3
-#         if secret[i]==guess[i]: 
+#         if secret[i]==guess[i]: aabc deaf
 #             pos+=1
 #         elif guess[i] in secret:
 #             let += 1
 #     return pos,let
 
-def evaluate_guess(secret, guess): #ABCA: guess CBAA : secret
+def evaluate_guess(secret, guess): 
     pos=let=0
-    # pos, let = 0,0
-    # 과제
+    # pos, let = 0,0(숫자가 다를경우 , 로 구분)
+    for i in range(SECRET_LENGTH):
+        if guess[i]==secret[i]:
+            pos+=1
+            let-=1  
+        cguess=guess.count(guess[i])
+        csecret=secret.count(guess[i])
+    if cguess>csecret:
+        let+=csecret
+    else:let+=cguess      
+
     return pos, let
+
 
 # 입력한 guess 에 대한 history를 출력하는 함수
 def show_history(h, current, secret):
