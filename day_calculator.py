@@ -42,38 +42,32 @@ def date2num(year, month, day):
 # string2date("14a2/2/31") >> (0, 0, 0)
 # string2date("14a2/02/31") >> (0, 0, 0)
 def string2date(s):
-    year=s[0:4]
-    y=year.isdigit()
+    ymd=s.split("/")
+    if len(ymd) != 3:
+        return (0,0,0)
+    year, month, day = ymd
 
-    month=s[5:7]
-    m=month.isdigit()
-
-    day=s[8:10]
-    d=day.isdigit()
-
-    if y==False or m==False or d==False:
-        year=0
-        month=0
-        day=0
-
-    date=(int(year),int(month),int(day))
-    return date
+    if not year.isdigit() or not month.isdigit() or not day.isdigit():
+        return (0,0,0)
+    return int(year), int(month), int(day)
 
 # 함수 isdigit() 과 isnumeric()의 차이 알아보기
 
 
 def date2string(year,month,day):
-    if month<10:
-        string=(str(year)+"/"+"0"+str(month)+"/"+str(day))
-        if day<10:
-            string=(str(year)+"/"+str(month)+"/"+"0"+str(day))
-            if month<10 and day<10:
-                string=(str(year)+"/"+"0"+str(month)+"/"+"0"+str(day))
-    else:string=(str(year)+"/"+str(month)+"/"+str(day))
-    return string
+    y = str(year)
+    m = "0" + str(month) if month < 10 else str(month)
+    # m = str(month)
+    # if month < 10:
+    #     m = "0" + m
+    d = "0" + str(day) if day < 10 else str(day)
+    # return y + "/" + m + "/" + d
+    # return "{0}/{1}/{2}".format(y, m, d)
+    return '/'.join([y, m, d])
+
+print(date2string(2010, 12, 2))
 
 
-# if절 이런 방법 뿐일까유..
 
 
 # integer n이 주어질 때 (year, month, day)를 반환하도록 작성하세요.
@@ -89,28 +83,29 @@ def num2date(n):
     month=1
     day=1
 
+    # q, r = divmod(n, FOUR_YEARS)
     year+=(n//FOUR_YEARS*4)+(n%FOUR_YEARS//365)
     
-    if year%4==0:
-        n=(n%FOUR_YEARS)%365
-        for i in LEAP_MONTH_LENGTH:
-            n-=i
-            if n>=0:
-                month+=1
-                day=n+1
+    length = MONTH_LENGTH if year%4 else LEAP_MONTH_LENGTH
+    n=(n%FOUR_YEARS)%365
+    for l in length:
+        n-=l
+        if n < 0:
+            break
+        month+=1
+        day=n+1
 
-    elif year%4>0:
-        n=(n%FOUR_YEARS)%365
-        for i in MONTH_LENGTH:
-            n-=i
-            if n >=0:
-                month+=1 
-                day=n+1
-                
-    date=(year,month,day)
-    return date
+    return year,month,day
+    
+# if a == 0:
+#     return 'a'
+# else:
+#     return 'b'
 
-
+# if a:
+#     return 'b'
+# else:
+#     return 'a'
 
 
 # "YYYY/MM/DD" 형식의 string date 가 input 으로 주어질 때 해당 date의 요일을 반환하세요.
@@ -120,19 +115,14 @@ def num2date(n):
 def day(date):
     
     dows=["Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday","Monday"] 
-    
-    ymd=string2date(date)
-    year=ymd[0]
-    month=ymd[1]
-    day=ymd[2]
+    year,month,day=string2date(date)
 
     total=date2num(year, month, day)
     if total<0:
         return -1
-    else: dow=total%7
 
-    whatday=('"'+date+' '+'is a'+' '+ dows[dow]+'"')
-    return whatday
+    return date+' is a '+ dows[total%7]
+    
 
 # date=input()
 # print(day(date))
@@ -143,18 +133,11 @@ def day(date):
 # between("1992/03/21", "2017/03/20") >> "There are 9130 days between 1992/03/21 and 2017/03/20"
 # between("2017/03/20", "2015/12/24") >> "There are -452 days between 2017/03/20 and 2015/12/24"
 def between(start, end):
-    symd=string2date(start)
-    syear=symd[0]
-    smonth=symd[1]
-    sday=symd[2]
-    
+
+    syear,smonth,sday=string2date(start)  
     stotal=date2num(syear,smonth,sday)
 
-    eymd=string2date(end)
-    eyear=eymd[0]
-    emonth=eymd[1]
-    eday=eymd[2]
-
+    eyear,emonth,eday=string2date(end)
     etotal=date2num(eyear,emonth,eday)
 
     long=etotal-stotal
@@ -164,6 +147,7 @@ def between(start, end):
 # (start,end)=input('','')...?
 # print(between(start, end))
 
+print(between("1992/03/21", "2017/03/20"))
 
 def intdate(date):
     ymd=string2date(date)
