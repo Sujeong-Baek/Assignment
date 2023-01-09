@@ -83,6 +83,7 @@ digits = [[True, True, True, True, True, True, False],          # 0
 #
 #
 #
+
 def lcd_digit(digit, size, c):
     pass
 
