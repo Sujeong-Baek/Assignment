@@ -115,6 +115,51 @@ def lcd_digit(digit, size, c):
   if digit=='9':
       return shape_1+shape_4+shape_1+shape_3+shape_1
 
+def lcd_digit2(digit, size, c):
+    font=''
+    shape_1=" "+c*size # ㅡ, 
+    shape_2=("\n"+c)*size+"\n" #ㅣ 
+    shape_3=("\n"+" "+" "*size+c)*size+"\n" #  ㅣ
+    shape_4=("\n"+c+" "*size+c)*size+"\n" #ㅣ ㅣ
+    blank_1=" "+" "*size #(ㅡ)
+    blank_2=("\n"+" "+" "*size+" ")*size+"\n" #(ㅣ ㅣ)
+    
+    if digit not in ['0','1','2','3','4','5','6','7','8','9']:
+        digit='10'
+
+    if digits[int(digit)][5]==True:
+        font+=shape_1 
+    else: font+=blank_1
+
+
+    if digits[int(digit)][4]==digits[int(digit)][0]==True:
+        font+=shape_4
+    elif digits[int(digit)][4]==digits[int(digit)][0]==False:
+        font+=blank_2
+    elif digits[int(digit)][4]==True and digits[int(digit)][0]==False:
+        font+=shape_2
+    elif digits[int(digit)][4]==False and digits[int(digit)][0]==True:
+        font+=shape_3
+    
+    if digits[int(digit)][6]==True:
+        font+=shape_1 
+    else: font+=blank_1
+
+    if digits[int(digit)][3]==digits[int(digit)][1]==True:
+        font+=shape_4
+    elif digits[int(digit)][3]==digits[int(digit)][1]==False:
+        font+=blank_2
+    elif digits[int(digit)][3]==True and digits[int(digit)][1]==False:
+        font+=shape_2
+    elif digits[int(digit)][3]==False and digits[int(digit)][1]==True:
+        font+=shape_3
+
+    if digits[int(digit)][2]==True:
+        font+=shape_1 
+    else: font+=blank_1
+
+    return font
+
 # 다음으로는 두 digit을 합치는 함수 combine을 작성해주세요.
 # left, right을 각각 "\n"으로 split한 다음 조각들을 합쳐서 다시 새로운 string을 만들어야 합니다
 # combine("This\nis\nfun", "&", "Hello\nlcd\nclock!")
@@ -176,7 +221,7 @@ def clock():
 
 # 이제 아래 코드의 주석을 지워서 시계를 run해보아요:)
 
-clock()
+#clock()
 
 
 
