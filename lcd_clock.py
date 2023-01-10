@@ -85,7 +85,36 @@ digits = [[True, True, True, True, True, True, False],          # 0
 #
 
 def lcd_digit(digit, size, c):
-    pass
+  shape_1=" "+c*size # ㅡ
+  shape_2=("\n"+c)*size+"\n" #ㅣ 
+  shape_3=("\n"+" "+" "*size+c)*size+"\n" #  ㅣ
+  shape_4=("\n"+c+" "*size+c)*size+"\n" #ㅣ ㅣ
+  blank_1=" "+" "*size #(ㅡ)
+  blank_2=("\n"+" "+" "*size+" ")*size+"\n" #(ㅣ ㅣ)
+
+  if digit not in ['0','1','2','3','4','5','6','7','8','9']:
+      return blank_1+blank_2+blank_1+blank_2+blank_1
+  if digit=='0':
+      return shape_1+shape_4+blank_1+shape_4+shape_1
+  if digit=='1':
+      return blank_1+shape_3+blank_1+shape_3+blank_1
+  if digit=='2':
+      return shape_1+shape_3+shape_1+shape_2+shape_1
+  if digit=='3':
+      return shape_1+shape_3+shape_1+shape_3+shape_1
+  if digit=='4':
+      return blank_1+shape_4+shape_1+shape_3+blank_1
+  if  digit=='5':
+      return shape_1+shape_2+shape_1+shape_3+shape_1
+  if digit=='6':
+      return shape_1+shape_2+shape_1+shape_4+shape_1
+  if digit=='7':
+      return shape_1+shape_3+blank_1+shape_3+blank_1
+  if digit=='8':
+      return shape_1+shape_4+shape_1+shape_4+shape_1
+  if digit=='9':
+      return shape_1+shape_4+shape_1+shape_3+shape_1
+
 
 # 다음으로는 두 digit을 합치는 함수 combine을 작성해주세요.
 # left, right을 각각 "\n"으로 split한 다음 조각들을 합쳐서 다시 새로운 string을 만들어야 합니다
