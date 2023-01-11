@@ -49,18 +49,15 @@ def evaluate_guess(secret, guess):
     pos=let=0
     # pos, let = 0,0(숫자가 다를경우 , 로 구분)
     for i in range(SECRET_LENGTH):
-        cguess=guess.count(guess[i])
-        csecret=secret.count(guess[i])
+        
         if guess[i]==secret[i]:
             pos+=1
             let-=1
-    
-        elif cguess>csecret:
-            let+=csecret
-            
-        elif cguess<=csecret:
-            let+=cguess      
-
+    for letter in ['A','B','C','D','E','F']:#i,j는 인덱스만
+        cguess=guess.count(letter)
+        csecret=secret.count(letter)
+        let += min(csecret, cguess)
+        # let += csecret if cguess > csecret else cguess
     return pos, let
 
 
