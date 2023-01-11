@@ -14,7 +14,6 @@ def create_secret(): #ABAB
     for _ in range(SECRET_LENGTH):
         index = random.randrange(len(c))
         letter = c[index]
-        # c = c[0:index] + c[index+1:]
         secret = secret + letter
     return secret
 
@@ -46,28 +45,21 @@ def get_guess():
 
 
 # return (pos, let) pos 는 위치까지 일치하는 글자, let은 secret 포함되지만 위치가 틀린 글자
-# def evaluate_guess(secret, guess):
-#     pos=0
-#     let=0
-#     for i in range(SECRET_LENGTH): # 0,1,2,3
-#         if secret[i]==guess[i]: aabc deaf
-#             pos+=1
-#         elif guess[i] in secret:
-#             let += 1
-#     return pos,let
-
 def evaluate_guess(secret, guess): 
     pos=let=0
     # pos, let = 0,0(숫자가 다를경우 , 로 구분)
     for i in range(SECRET_LENGTH):
-        if guess[i]==secret[i]:
-            pos+=1
-            let-=1  
         cguess=guess.count(guess[i])
         csecret=secret.count(guess[i])
-    if cguess>csecret:
-        let+=csecret
-    else:let+=cguess      
+        if guess[i]==secret[i]:
+            pos+=1
+            let-=1
+    
+        elif cguess>csecret:
+            let+=csecret
+            
+        elif cguess<=csecret:
+            let+=cguess      
 
     return pos, let
 
