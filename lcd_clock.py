@@ -85,78 +85,43 @@ digits = [[True, True, True, True, True, True, False],          # 0
 #
 
 def lcd_digit(digit, size, c):
-  shape_1=" "+c*size+" " # ㅡ
-  shape_2=("\n"+c+" "*(1+size))*size+"\n" #ㅣ
-  shape_3=("\n"+" "+" "*size+c)*size+"\n" #  ㅣ
-  shape_4=("\n"+c+" "*size+c)*size+"\n" #ㅣ ㅣ
-  blank_1=" "+" "*size+" " #(ㅡ)
-  blank_2=("\n"+" "+" "*size+" ")*size+"\n" #(ㅣ ㅣ)
-
-  if digit not in ['0','1','2','3','4','5','6','7','8','9']:
-      return blank_1+blank_2+blank_1+blank_2+blank_1
-  if digit=='0':
-      return shape_1+shape_4+blank_1+shape_4+shape_1
-  if digit=='1':
-      return blank_1+shape_3+blank_1+shape_3+blank_1
-  if digit=='2':
-      return shape_1+shape_3+shape_1+shape_2+shape_1
-  if digit=='3':
-      return shape_1+shape_3+shape_1+shape_3+shape_1
-  if digit=='4':
-      return blank_1+shape_4+shape_1+shape_3+blank_1
-  if  digit=='5':
-      return shape_1+shape_2+shape_1+shape_3+shape_1
-  if digit=='6':
-      return shape_1+shape_2+shape_1+shape_4+shape_1
-  if digit=='7':
-      return shape_1+shape_3+blank_1+shape_3+blank_1
-  if digit=='8':
-      return shape_1+shape_4+shape_1+shape_4+shape_1
-  if digit=='9':
-      return shape_1+shape_4+shape_1+shape_3+shape_1
-
-def lcd_digit2(digit, size, c):
     font=''
-    shape_1=" "+c*size # ㅡ, 
-    shape_2=("\n"+c)*size+"\n" #ㅣ 
-    shape_3=("\n"+" "+" "*size+c)*size+"\n" #  ㅣ
-    shape_4=("\n"+c+" "*size+c)*size+"\n" #ㅣ ㅣ
-    blank_1=" "+" "*size #(ㅡ)
-    blank_2=("\n"+" "+" "*size+" ")*size+"\n" #(ㅣ ㅣ)
+    shape_line=" "+c*size # ㅡ, 
+    shape_left=("\n"+c)*size+"\n" #ㅣ 
+    shape_right=("\n"+" "+" "*size+c)*size+"\n" #  ㅣ
+    shape_double=("\n"+c+" "*size+c)*size+"\n" #ㅣ ㅣ
+    blank_line=" "+" "*size #(ㅡ)
+    blank_double=("\n"+" "+" "*size+" ")*size+"\n" #(ㅣ ㅣ)
     
     if digit not in ['0','1','2','3','4','5','6','7','8','9']:
         digit='10'
 
-    if digits[int(digit)][5]==True:
-        font+=shape_1 
-    else: font+=blank_1
+    digit = int(digit)
+    font+=shape_line if digits[digit][5] else blank_line
+        
 
-
-    if digits[int(digit)][4]==digits[int(digit)][0]==True:
-        font+=shape_4
-    elif digits[int(digit)][4]==digits[int(digit)][0]==False:
-        font+=blank_2
-    elif digits[int(digit)][4]==True and digits[int(digit)][0]==False:
-        font+=shape_2
-    elif digits[int(digit)][4]==False and digits[int(digit)][0]==True:
-        font+=shape_3
+    if digits[digit][4] and digits[digit][0]: # True, True
+        font+=shape_double
+    elif not digits[digit][4] and not digits[digit][0]: # False, False
+        font+=blank_double
+    elif digits[digit][4] and not digits[digit][0]: # True, False
+        font+=shape_left
+    else: # False, True
+        font+=shape_right
     
-    if digits[int(digit)][6]==True:
-        font+=shape_1 
-    else: font+=blank_1
+    font+= shape_line if digits[digit][6] else blank_line
+    
 
-    if digits[int(digit)][3]==digits[int(digit)][1]==True:
-        font+=shape_4
-    elif digits[int(digit)][3]==digits[int(digit)][1]==False:
-        font+=blank_2
-    elif digits[int(digit)][3]==True and digits[int(digit)][1]==False:
-        font+=shape_2
-    elif digits[int(digit)][3]==False and digits[int(digit)][1]==True:
-        font+=shape_3
+    if digits[digit][3] and digits[digit][1]:
+        font+=shape_double
+    elif not digits[digit][3] and not digits[digit][1]:
+        font+=blank_double
+    elif digits[digit][3] and not digits[digit][1]:
+        font+=shape_left
+    else:
+        font+=shape_right
 
-    if digits[int(digit)][2]==True:
-        font+=shape_1 
-    else: font+=blank_1
+    font+=shape_line if digits[digit][2] else blank_line
 
     return font
 
@@ -176,14 +141,11 @@ def lcd_digit2(digit, size, c):
 # *   * #     @
 # *   * #     @
 #  ***  #  @@@ 
+#
 def combine(left, sep, right):
-  a=""       
-  l=left.split("\n")
-  r=right.split("\n")
-  for i in range(len(l)):
-    a+= l[i]+sep+r[i]+'\n' #개행문자,newline
+    ans=[f"{l}+{sep}+{r}" for l,r in zip(left.split("\n"),right.split("\n"))]
     
-  return a[0:-1]
+    return ans
   
 # print(combine(lcd_digit('8', 3, '@'), " # ", lcd_digit('9', 3, '@')))
 
