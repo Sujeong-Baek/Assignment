@@ -17,26 +17,21 @@ def reorder_letters(s): # this language. course we will use the python programmi
     i = 0 # 1    
     while i < len(s) : # i >= len(s)
          word = "" # a
-         shuffle_word=""
          while i < len(s): # 0 < 2            
             if not is_letter(s[i]): 
                 shuffle_word = shuffle(s[len(word):i])              
-                word += shuffle_word+s[i]
-            shuffle_word += s[i]            
+                word += shuffle_word+s[i]         
             i += 1            
-         return word
+         print(word)
         
     print("") 
-
-print(reorder_letters("apple banana kiwi orange!"))
-
 
 
 args = sys.argv
 if (len(args) != 2):
     print("Usage: python readable.py <filename>")
 else:
-    with open(args[1]) as f:
+    with open(args[1], 'rt', encoding='UTF8') as f:
         for line in f.readlines():
             reorder_letters(line)
 
