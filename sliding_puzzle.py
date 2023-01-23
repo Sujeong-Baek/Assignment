@@ -193,8 +193,11 @@ def display_board(board):
     side = '|    |'
     ans = "" 
     for i in board:
+        if not i : 
+                card = "      \n      \n      \n      \n      " 
         number = '|'+f'{str(i[0]):^4}'+'|'
-        line = card= f'{top_bottom}\n{side}\n{number}\n{side}\n{top_bottom}'   
+        line = card= f'{top_bottom}\n{side}\n{number}\n{side}\n{top_bottom}' 
+          
         for j in i[1:]:       
             if not j : 
                 card = "      \n      \n      \n      \n      " 
@@ -204,9 +207,8 @@ def display_board(board):
             line = "\n".join([f"{l}{' '}{r}" for l,r in zip(line.split("\n"), card.split("\n"))])           
         
         ans += line+"\n"     
-    return ans[:-1]
-    
-print(display_board(make_board(3,4)))
+    print(ans[:-1])
+
 # 클래스를 사용해봅시다
 class Pos:
     def __init__(self, row, col):
@@ -231,7 +233,6 @@ def find_empty(board):
         if 0 in board[i] :
             return Pos(i,board[i].index(0))
     
-print(find_empty(make_board(2, 11)))
 # >>> left = Pos(0, 1)
 # >>> right = Pos(0, -1)
 # >>> up = Pos(1, 0)
@@ -272,12 +273,24 @@ print(find_empty(make_board(2, 11)))
 # |  4 | |  5 | |  3 | 
 # |    | |    | |    | 
 # o----o o----o o----o 
-def make_move(board, pos):
-    pass
+
+def make_move(board, pos): 
+    zero = find_empty(board) #Pos
+    other = Pos(zero.row + pos.row, zero.col + pos.col)
+    if other.row <0 or other.row>=len(board) or other.col <0 or other.col>=len(board[0]) :
+        return
+    other_num = board[other.row][other.col] 
+    board[other.row][other.col] = 0
+    board[zero.row][zero.col] = other_num 
 
 # make_move를 이용해서 iter만큼 board를 random하게 움직여주세요.
-def shuffle(board, iter):
-    pass
+def shuffle(board, iter): 
+    pos_s = [Pos(0, 1), Pos(0, -1), Pos(1, 0), Pos(-1, 0)] 
+    for i in range(iter):
+        pos = pos_s[random.randrange(0,4)] 
+        make_move(board, pos)
+    return board
+    
 
 # 유저의 input을 Pos object로 변환하는 함수입니다
 # empty 가 아닌 첫번째 글자를 확인해야 하고 invalid한 input에 대해서는 Pos(0,0)을 리턴합니다
@@ -309,4 +322,3 @@ def play_game(rows, cols):
       return
     move = str_to_move(s)
     make_move(board, move)
-
