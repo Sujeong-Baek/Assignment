@@ -1,3 +1,4 @@
+from abc import ABC
 import random
 
 # sliding puzzle을 구현하는 과제입니다:)
@@ -128,7 +129,15 @@ import random
 # make_board(2, 2) => [[1, 2], [3, 0]]
 # make_board(4, 7) => [[1, 2, 3, 4, 5, 6, 7],[8, 9, 10, 11, 12, 13, 14],[15, 16, 17, 18, 19, 20, 21],[22, 23, 24, 25, 26, 27, 0]]
 def make_board(rows, cols):
-    pass
+    list_two=[]
+    for i in range(0, rows*cols, cols):
+        list_one=[]
+        for j in range(i+1,i+1+cols):
+            list_one.append(j)
+        list_two.append(list_one)
+    list_two[-1][-1]=0
+    return list_two
+print(make_board(3,4))
 
 # 놀이판을 출력하는 함수입니다. 0은 빈칸을 나타냅니다.
 # >>> display_board(make_board(2, 3))
@@ -175,13 +184,29 @@ def make_board(rows, cols):
 # |    | |    | |    | |    | |    | |    | |    | |    | |    | 
 # o----o o----o o----o o----o o----o o----o o----o o----o o----o 
 # o----o o----o o----o o----o o----o o----o o----o o----o        
-# |    | |    | |    | |    | |    | |    | |    | |    |        
+# |    | |    | |    | |    | |    | |    | |    | |    |   
 # | 19 | | 20 | | 21 | | 22 | | 23 | | 24 | | 25 | | 26 |        
 # |    | |    | |    | |    | |    | |    | |    | |    |        
 # o----o o----o o----o o----o o----o o----o o----o o----o 
 def display_board(board):
-    pass
-
+    top_bottom = 'o----o'
+    side = '|    |'
+    ans = "" 
+    for i in board:
+        number = '|'+f'{str(i[0]):^4}'+'|'
+        line = card= f'{top_bottom}\n{side}\n{number}\n{side}\n{top_bottom}'   
+        for j in i[1:]:       
+            if not j : 
+                card = "      \n      \n      \n      \n      " 
+            else:
+                number = '|'+f'{str(j):^4}'+'|'
+                card = f'{top_bottom}\n{side}\n{number}\n{side}\n{top_bottom}'            
+            line = "\n".join([f"{l}{' '}{r}" for l,r in zip(line.split("\n"), card.split("\n"))])           
+        
+        ans += line+"\n"     
+    return ans[:-1]
+    
+print(display_board(make_board(3,4)))
 # 클래스를 사용해봅시다
 class Pos:
     def __init__(self, row, col):
@@ -202,8 +227,11 @@ class Pos:
 # >>> find_empty(make_board(3, 9))
 # Pos(row=2, col=8)
 def find_empty(board):
-    pass
-
+    for i in range(len(board)):
+        if 0 in board[i] :
+            return Pos(i,board[i].index(0))
+    
+print(find_empty(make_board(2, 11)))
 # >>> left = Pos(0, 1)
 # >>> right = Pos(0, -1)
 # >>> up = Pos(1, 0)
