@@ -137,7 +137,7 @@ def make_board(rows, cols):
         list_two.append(list_one)
     list_two[-1][-1]=0
     return list_two
-print(make_board(3,4))
+
 
 # 놀이판을 출력하는 함수입니다. 0은 빈칸을 나타냅니다.
 # >>> display_board(make_board(2, 3))
@@ -193,12 +193,13 @@ def display_board(board):
     side = '|    |'
     ans = "" 
     for i in board:
-        if not i : 
-                card = "      \n      \n      \n      \n      " 
-        number = '|'+f'{str(i[0]):^4}'+'|'
-        line = card= f'{top_bottom}\n{side}\n{number}\n{side}\n{top_bottom}' 
+        if not i[0] : 
+            line = "      \n      \n      \n      \n      " 
+        else :
+            number = '|'+f'{str(i[0]):^4}'+'|'
+            line = f'{top_bottom}\n{side}\n{number}\n{side}\n{top_bottom}' 
           
-        for j in i[1:]:       
+        for j in i[1:] :       
             if not j : 
                 card = "      \n      \n      \n      \n      " 
             else:
@@ -274,9 +275,9 @@ def find_empty(board):
 # |    | |    | |    | 
 # o----o o----o o----o 
 
-def make_move(board, pos): 
-    zero = find_empty(board) #Pos
-    other = Pos(zero.row + pos.row, zero.col + pos.col)
+def make_move(board, pos):
+    zero = find_empty(board) 
+    other = Pos(int(zero.row + pos.row), int(zero.col + pos.col))
     if other.row <0 or other.row>=len(board) or other.col <0 or other.col>=len(board[0]) :
         return
     other_num = board[other.row][other.col] 
@@ -290,7 +291,6 @@ def shuffle(board, iter):
         pos = pos_s[random.randrange(0,4)] 
         make_move(board, pos)
     return board
-    
 
 # 유저의 input을 Pos object로 변환하는 함수입니다
 # empty 가 아닌 첫번째 글자를 확인해야 하고 invalid한 input에 대해서는 Pos(0,0)을 리턴합니다
@@ -309,7 +309,14 @@ def shuffle(board, iter):
 # >>> str_to_move("")
 # Pos(row=0, col=0)
 def str_to_move(s):
-    pass
+    s = s.replace(" ", "")
+    s = s.upper()
+    if s[0] in "L": return Pos(0, 1)
+    elif s[0] in "R": return Pos(0, -1)
+    elif s[0] in "U": return Pos(1, 0)
+    elif s[0] in "D": return Pos(-1, 0)
+    else: return Pos(0, 0)
+
 
 # 이제 게임을 해봅시다:)
 def play_game(rows, cols):
