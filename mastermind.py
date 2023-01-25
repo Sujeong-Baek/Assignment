@@ -60,6 +60,9 @@ def evaluate_guess(secret, guess):
         # let += csecret if cguess > csecret else cguess
     return pos, let
 
+    
+print(evaluate_guess("ABCD", "ABCC"))
+
 
 # 입력한 guess 에 대한 history를 출력하는 함수
 def show_history(h, current, secret):
@@ -90,4 +93,3 @@ def main():
             print("My secret was {0}, you guessed correctly in {1} guesses!".format(secret, current))
             return
 
-main()
