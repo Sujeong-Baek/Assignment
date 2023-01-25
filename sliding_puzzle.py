@@ -138,6 +138,13 @@ def make_board(rows, cols):
     list_two[-1][-1]=0
     return list_two
 
+def make_board2(rows, cols):
+    board = []
+    for row in range(rows):
+        board.append([row*cols + col + 1 for col in range(cols)])
+    board[-1][-1] = 0
+    return board
+
 
 # 놀이판을 출력하는 함수입니다. 0은 빈칸을 나타냅니다.
 # >>> display_board(make_board(2, 3))
@@ -192,7 +199,8 @@ def display_board(board):
     top_bottom = 'o----o'
     side = '|    |'
     ans = "" 
-    for i in board:
+    for i in board: # [1, 2, 3, 4]
+    # for row in board: # [1, 2, 3, 4]
         if not i[0] : 
             line = "      \n      \n      \n      \n      " 
         else :
@@ -278,18 +286,21 @@ def find_empty(board):
 def make_move(board, pos):
     zero = find_empty(board) 
     other = Pos(int(zero.row + pos.row), int(zero.col + pos.col))
+    
     if other.row <0 or other.row>=len(board) or other.col <0 or other.col>=len(board[0]) :
-        return
+        return False
     other_num = board[other.row][other.col] 
     board[other.row][other.col] = 0
     board[zero.row][zero.col] = other_num 
+    return True
 
 # make_move를 이용해서 iter만큼 board를 random하게 움직여주세요.
 def shuffle(board, iter): 
     pos_s = [Pos(0, 1), Pos(0, -1), Pos(1, 0), Pos(-1, 0)] 
-    for i in range(iter):
+    for _ in range(iter):
         pos = pos_s[random.randrange(0,4)] 
-        make_move(board, pos)
+        while not make_move(board, pos):
+            pos = pos_s[random.randrange(0,4)]
     return board
 
 # 유저의 input을 Pos object로 변환하는 함수입니다
@@ -309,9 +320,8 @@ def shuffle(board, iter):
 # >>> str_to_move("")
 # Pos(row=0, col=0)
 def str_to_move(s):
-    s = s.replace(" ", "")
-    s = s.upper()
-    if s[0] in "L": return Pos(0, 1)
+    s = s.replace(" ", "").upper()
+    if s[0] == "L": return Pos(0, 1)
     elif s[0] in "R": return Pos(0, -1)
     elif s[0] in "U": return Pos(1, 0)
     elif s[0] in "D": return Pos(-1, 0)
