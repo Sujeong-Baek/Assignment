@@ -52,23 +52,12 @@ def evaluate_guess(secret, guess):
         
         if guess[i]==secret[i]:
             pos+=1
-<<<<<<< Updated upstream
             let-=1
     for letter in ['A','B','C','D','E','F']:#i,j는 인덱스만
         cguess=guess.count(letter)
         csecret=secret.count(letter)
         let += min(csecret, cguess)
         # let += csecret if cguess > csecret else cguess
-=======
-            let-=1  
-        cguess=guess.count(guess[i])
-        csecret=secret.count(guess[i])
-        if cguess>csecret:
-            let+=csecret
-        elif cguess<=csecret:
-            let+=cguess      
-
->>>>>>> Stashed changes
     return pos, let
 
     
