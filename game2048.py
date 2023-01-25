@@ -17,12 +17,6 @@ class Board:
             line += "\n"+side 
         return line+top        
 
-
-# o----o----o----o----o
-# |    |    |    |    |
-# |    ||  2 ||  4 ||    ||
-# |    |    |    |    |
-
     # empty cell을 random하게 골라서 2 또는 4로 세팅합니다
     def insert(self):
         while True:
