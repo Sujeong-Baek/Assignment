@@ -94,4 +94,4 @@ shopping2()
 #     print("price: " + str(price))
 #     print("p: " + str(p))
 
-'3                    3 x 1500 KRW 4500 KRW'
+# '3                    3 x 1500 KRW 4500 KRW'

@@ -1,3 +1,4 @@
+from abc import ABC
 import random
 
 # sliding puzzle을 구현하는 과제입니다:)
@@ -128,7 +129,28 @@ import random
 # make_board(2, 2) => [[1, 2], [3, 0]]
 # make_board(4, 7) => [[1, 2, 3, 4, 5, 6, 7],[8, 9, 10, 11, 12, 13, 14],[15, 16, 17, 18, 19, 20, 21],[22, 23, 24, 25, 26, 27, 0]]
 def make_board(rows, cols):
-    pass
+    list_two=[]
+    for i in range(0, rows*cols, cols):
+        list_one=[]
+        for j in range(i+1,i+1+cols):
+            list_one.append(j)
+        list_two.append(list_one)
+    list_two[-1][-1]=0
+    return list_two
+
+def make_board2(rows, cols):
+    board=[]
+    for row in range(rows):
+        board.append([row*cols + col + 1 for col in range(cols)])
+    board[-1][-1] = 0
+    return board
+
+# lint
+# pylint
+# sql : standard query language
+# 1 mike  123-4567
+# 2 alice 345-6789
+
 
 # 놀이판을 출력하는 함수입니다. 0은 빈칸을 나타냅니다.
 # >>> display_board(make_board(2, 3))
@@ -175,12 +197,32 @@ def make_board(rows, cols):
 # |    | |    | |    | |    | |    | |    | |    | |    | |    | 
 # o----o o----o o----o o----o o----o o----o o----o o----o o----o 
 # o----o o----o o----o o----o o----o o----o o----o o----o        
-# |    | |    | |    | |    | |    | |    | |    | |    |        
+# |    | |    | |    | |    | |    | |    | |    | |    |   
 # | 19 | | 20 | | 21 | | 22 | | 23 | | 24 | | 25 | | 26 |        
 # |    | |    | |    | |    | |    | |    | |    | |    |        
 # o----o o----o o----o o----o o----o o----o o----o o----o 
 def display_board(board):
-    pass
+    top_bottom = 'o----o'
+    side = '|    |'
+    ans = "" 
+    for i in board: # [1, 2, 3, 4]
+    # for row in board: # [1, 2, 3, 4]
+        if not i[0] : 
+            line = "      \n      \n      \n      \n      " 
+        else :
+            number = '|'+f'{str(i[0]):^4}'+'|'
+            line = f'{top_bottom}\n{side}\n{number}\n{side}\n{top_bottom}'
+          
+        for j in i[1:]:       
+            if not j:
+                card = "      \n      \n      \n      \n      "
+            else:
+                number = '|'+f'{str(j):^4}'+'|'
+                card = f'{top_bottom}\n{side}\n{number}\n{side}\n{top_bottom}'            
+            line = "\n".join([f"{l}{' '}{r}" for l,r in zip(line.split("\n"), card.split("\n"))])           
+        
+        ans += line+"\n"     
+    print(ans[:-1])
 
 # 클래스를 사용해봅시다
 class Pos:
@@ -202,8 +244,10 @@ class Pos:
 # >>> find_empty(make_board(3, 9))
 # Pos(row=2, col=8)
 def find_empty(board):
-    pass
-
+    for i in range(len(board)):
+        if 0 in board[i] :
+            return Pos(i,board[i].index(0))
+    
 # >>> left = Pos(0, 1)
 # >>> right = Pos(0, -1)
 # >>> up = Pos(1, 0)
@@ -244,12 +288,26 @@ def find_empty(board):
 # |  4 | |  5 | |  3 | 
 # |    | |    | |    | 
 # o----o o----o o----o 
+
 def make_move(board, pos):
-    pass
+    zero = find_empty(board) 
+    other = Pos(int(zero.row + pos.row), int(zero.col + pos.col))
+    
+    if other.row <0 or other.row>=len(board) or other.col <0 or other.col>=len(board[0]) :
+        return False
+    other_num = board[other.row][other.col] 
+    board[other.row][other.col] = 0
+    board[zero.row][zero.col] = other_num 
+    return True
 
 # make_move를 이용해서 iter만큼 board를 random하게 움직여주세요.
-def shuffle(board, iter):
-    pass
+def shuffle(board, iter): 
+    pos_s = [Pos(0, 1), Pos(0, -1), Pos(1, 0), Pos(-1, 0)] 
+    for _ in range(iter):
+        pos = pos_s[random.randrange(0,4)] 
+        while not make_move(board, pos):
+            pos = pos_s[random.randrange(0,4)]
+    return board
 
 # 유저의 input을 Pos object로 변환하는 함수입니다
 # empty 가 아닌 첫번째 글자를 확인해야 하고 invalid한 input에 대해서는 Pos(0,0)을 리턴합니다
@@ -268,7 +326,13 @@ def shuffle(board, iter):
 # >>> str_to_move("")
 # Pos(row=0, col=0)
 def str_to_move(s):
-    pass
+    s = s.replace(" ", "").upper()
+    if s[0] == "L": return Pos(0, 1)
+    elif s[0] in "R": return Pos(0, -1)
+    elif s[0] in "U": return Pos(1, 0)
+    elif s[0] in "D": return Pos(-1, 0)
+    else: return Pos(0, 0)
+
 
 # 이제 게임을 해봅시다:)
 def play_game(rows, cols):
@@ -281,4 +345,3 @@ def play_game(rows, cols):
       return
     move = str_to_move(s)
     make_move(board, move)
-
