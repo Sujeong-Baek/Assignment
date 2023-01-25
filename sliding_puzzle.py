@@ -139,11 +139,17 @@ def make_board(rows, cols):
     return list_two
 
 def make_board2(rows, cols):
-    board = []
+    board=[]
     for row in range(rows):
         board.append([row*cols + col + 1 for col in range(cols)])
     board[-1][-1] = 0
     return board
+
+# lint
+# pylint
+# sql : standard query language
+# 1 mike  123-4567
+# 2 alice 345-6789
 
 
 # 놀이판을 출력하는 함수입니다. 0은 빈칸을 나타냅니다.
@@ -205,11 +211,11 @@ def display_board(board):
             line = "      \n      \n      \n      \n      " 
         else :
             number = '|'+f'{str(i[0]):^4}'+'|'
-            line = f'{top_bottom}\n{side}\n{number}\n{side}\n{top_bottom}' 
+            line = f'{top_bottom}\n{side}\n{number}\n{side}\n{top_bottom}'
           
-        for j in i[1:] :       
-            if not j : 
-                card = "      \n      \n      \n      \n      " 
+        for j in i[1:]:       
+            if not j:
+                card = "      \n      \n      \n      \n      "
             else:
                 number = '|'+f'{str(j):^4}'+'|'
                 card = f'{top_bottom}\n{side}\n{number}\n{side}\n{top_bottom}'            
