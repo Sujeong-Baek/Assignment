@@ -18,7 +18,7 @@ class Board:
         return line+top    
 
     # empty cell을 random하게 골라서 2 또는 4로 세팅합니다
-    def insert(self) -> None:
+    def insert(self):
         while True:
             x=random.randrange(4)
             y=random.randrange(4)
@@ -36,41 +36,92 @@ class Board:
     # 해당 push에서 merge된 cell은 해당 차수에서 다시 merge할 수 없습니다
     # ex. 0 2 2 4 >> 4 4 0 0
     # 두 cell이 merge할 때마다 새로 생긴 cell 값을 포인트로 얻습니다
-    def push_left(self)-> None:
+    def push_left(self):
+        point=0
         for i in range(4):
             left=[0,0,0,0]
-            index=0
+            pos=0
+            pre=0
             for j in range(4):
-                if self.nums[i][j]!=0:
-                    left[index]=self.nums[i][j]
-                    index+=1
-            self.nums[i]=left
-        print(self)
-        for i in range(4):
-            left=[0,0,0,0]
-            index=0
-            for j in range(4):
-                if self.nums[i][j] == 0:
+                if not self.nums[i][j]:
                     continue
-                if j<3 and self.nums[i][j]==self.nums[i][j+1]:
-                    left[index]=self.nums[i][j]+self.nums[i][j+1]
-                    self.nums[i][j+1]=0
-                elif j<3 and self.nums[i][j]!=self.nums[i][j+1]:
-                    left[index]=self.nums[i][j]
-                else: left[index]=self.nums[i][j]
-                index+=1
+                if pre!=self.nums[i][j]:
+                    left[pos]=self.nums[i][j]
+                    pre=self.nums[i][j]
+                    pos+=1
+                else:
+                    left[pos-1]=pre*2
+                    point+=pre*2
+                    pre=0
             self.nums[i]=left
-        return
+        return point
 
 
-    def push_right(self) -> None:
-        pass
+    def push_right(self):
+        point=0
+        for i in range(4):
+            right=[0,0,0,0]
+            pos=3
+            pre=0
+            for j in range(3,-1,-1):
+                if not self.nums[i][j]:
+                    continue
+                if pre!=self.nums[i][j]:
+                    right[pos]=self.nums[i][j]
+                    pre=self.nums[i][j]
+                    pos-=1
+                else:
+                    right[pos+1]=pre*2
+                    point+=pre*2
+                    pre=0
+            self.nums[i]=right
+        return point
+
 
     def push_up(self):
-        pass
+        point=0
+        up=[[0]*4 for _ in range(4)]
+        pos_x=0
+        for i in range(4):
+            pos_y=0
+            pre=0
+            for j in range(4):
+                if not self.nums[j][i]:
+                    continue
+                if pre!=self.nums[j][i]:
+                    up[pos_y][pos_x]=self.nums[j][i]
+                    pre=self.nums[j][i]
+                    pos_y+=1
+                else:
+                    up[pos_y-1][pos_x]=pre*2
+                    point+=pre*2
+                    pre=0
+            pos_x+=1
+        self.nums=up
+        return point
+            
 
     def push_down(self):
-        pass
+        point=0
+        down=[[0]*4 for _ in range(4)]
+        pos_x=0
+        for i in range(4):
+            pos_y=3
+            pre=0
+            for j in range(3,-1,-1):
+                if not self.nums[j][i]:
+                    continue
+                if pre!=self.nums[j][i]:
+                    down[pos_y][pos_x]=self.nums[j][i]
+                    pre=self.nums[j][i]
+                    pos_y-=1
+                else:
+                    down[pos_y+1][pos_x]=pre*2
+                    point+=pre*2
+                    pre=0
+            pos_x+=1
+        self.nums=down
+        return point
 
     def push(self, direction):
         if direction == 'l':
@@ -82,23 +133,35 @@ class Board:
         else:
             return self.push_down()
 
-    # empty cell이 없다면 True를 리턴하고, 그 외엔 False를 리턴합니다
+    # empty cell이 없?다면 True를 리턴하고, 그 외엔 False를 리턴합니다
     def is_full(self):
-        pass
+        
+        for i in range(4): 
+            for j in range(4):
+                if 0 == self.nums[i][j]:
+                    return False
+        return True
+
 
 b = Board()
 b.insert()
 b.insert()
 b.insert()
 b.insert()
+b.insert() 
 b.insert()
 b.insert()
 b.insert()
+b.insert()
+print(b)
+print(b.push_left())
+print(b)
 b.insert()
 b.insert()
 print(b)
 b.push_left()
 print(b)
+
 
 # >>> val b = Board()
 # >>> b
@@ -141,23 +204,29 @@ print(b)
 # |    |    |    |    |
 # o----o----o----o----o
 
-# def main():
-#     b = Board()
-#     b.insert()
-#     b.insert()
+def main():
+    b = Board()
+    b.insert()
+    b.insert()
 
-#     points = 0
+    points = 0
     
-#     while True:
-#         print(b)
-#         print(f"{points} points\n")
-#         s = input("What is your move: ").lower().strip()
-#         print()
-#         if len(s) == 1 and s in "lrud":
-#             points += b.push(s[0])
-#         if b.is_full():
-#             print(b)
-#             print("\nGame over.")
-#             print(f"You have {points} points.")
-#             return
-#         b.insert()
+    while True:
+        print(b)
+        print(f"{points} points\n")
+        s = input("What is your move: ").lower().strip()
+        print()
+        if len(s) == 1 and s in "lrud":
+            # points += b.push(s[0])
+            points+=b.push(s)
+        else: continue
+        
+        if b.is_full():
+            print(b)
+            print("\nGame over.")
+            print(f"You have {points} points.")
+            return
+        b.insert()
+
+
+main()
