@@ -56,7 +56,6 @@ class Board:
             self.nums[i]=left
         return point
 
-
     def push_right(self):
         point=0
         for i in range(4):
@@ -75,6 +74,7 @@ class Board:
                     point+=pre*2
                     pre=0
             self.nums[i]=right
+    
         return point
 
 
@@ -122,6 +122,8 @@ class Board:
             pos_x+=1
         self.nums=down
         return point
+        
+        
 
     def push(self, direction):
         if direction == 'l':
@@ -133,6 +135,8 @@ class Board:
         else:
             return self.push_down()
 
+
+
     # empty cell이 없?다면 True를 리턴하고, 그 외엔 False를 리턴합니다
     def is_full(self):
         for i in range(4):
@@ -140,6 +144,7 @@ class Board:
                 if 0 == self.nums[i][j]:
                     return False
         return True
+
 
 # >>> val b = Board()
 # >>> b
@@ -186,9 +191,9 @@ def main():
     b = Board()
     b.insert()
     b.insert()
-
-    points = 0
     
+    points=0
+
     while True:
         print(b)
         print(f"{points} points\n")
@@ -197,11 +202,11 @@ def main():
         if len(s) != 1 or not s in "lrud":
             continue
         if len(s) == 1 and s in "lrud":
+            a=b.nums.copy()
             points+=b.push(s)
-
-        
-            b.insert()
-        
+            if a!=b.nums:
+                b.insert()
+         
         if b.is_full():
             print(b)
             print("\nGame over.")
