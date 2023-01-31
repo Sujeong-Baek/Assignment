@@ -135,33 +135,11 @@ class Board:
 
     # empty cell이 없?다면 True를 리턴하고, 그 외엔 False를 리턴합니다
     def is_full(self):
-        
-        for i in range(4): 
+        for i in range(4):
             for j in range(4):
                 if 0 == self.nums[i][j]:
                     return False
         return True
-
-
-b = Board()
-b.insert()
-b.insert()
-b.insert()
-b.insert()
-b.insert() 
-b.insert()
-b.insert()
-b.insert()
-b.insert()
-print(b)
-print(b.push_left())
-print(b)
-b.insert()
-b.insert()
-print(b)
-b.push_left()
-print(b)
-
 
 # >>> val b = Board()
 # >>> b
@@ -216,17 +194,19 @@ def main():
         print(f"{points} points\n")
         s = input("What is your move: ").lower().strip()
         print()
+        if len(s) != 1 or not s in "lrud":
+            continue
         if len(s) == 1 and s in "lrud":
-            # points += b.push(s[0])
             points+=b.push(s)
-        else: continue
+
+        
+            b.insert()
         
         if b.is_full():
             print(b)
             print("\nGame over.")
             print(f"You have {points} points.")
             return
-        b.insert()
-
+        
 
 main()
