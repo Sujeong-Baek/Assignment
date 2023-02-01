@@ -202,9 +202,9 @@ def main():
         if len(s) != 1 or not s in "lrud":
             continue
         if len(s) == 1 and s in "lrud":
-            a=b.nums.copy()
+            pre=b.nums.copy()
             points+=b.push(s)
-            if a!=b.nums:
+            if pre!=b.nums:
                 b.insert()
          
         if b.is_full():
@@ -214,4 +214,3 @@ def main():
             return
         
 
-main()
