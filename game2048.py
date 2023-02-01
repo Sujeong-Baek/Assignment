@@ -10,11 +10,11 @@ class Board:
         top="o----o----o----o----o\n"
         side = "|    |    |    |    |\n"
         for i in range(4):
-            line+=top+side+"|"
+            line+=f"{top}{side}|"
             for j in self.nums[i]:
                 if j==0: j=" "
-                line += f'{j:^4}|'
-            line += "\n"+side
+                line += f"{j:^4}|"
+            line += f"\n{side}"
         return line+top    
 
     # empty cell을 random하게 골라서 2 또는 4로 세팅합니다
@@ -213,4 +213,4 @@ def main():
             print(f"You have {points} points.")
             return
         
-
+main()
