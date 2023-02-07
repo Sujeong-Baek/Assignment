@@ -11,14 +11,6 @@ class Board:
         top = "o----o----o----o----o\n"
         side = "|    |    |    |    |\n"
         for i in range(4):
-<<<<<<< Updated upstream
-            line+=top+side+"|"
-            for j in self.nums[i]:
-                if j==0: j=" "
-                line += f'{j:^4}|'
-            line += "\n"+side
-        return line+top    
-=======
             line += f"{top}{side}|"
             for j in self.nums[i]:
                 if j == 0:
@@ -26,7 +18,6 @@ class Board:
                 line += f"{j:^4}|"
             line += f"\n{side}"
         return line + top
->>>>>>> Stashed changes
 
     def insert(self):
         """empty cell을 random하게 골라서 2 또는 4로 세팅합니다"""
@@ -142,7 +133,7 @@ class Board:
         else:
             return self.push_down()
 
-    # empty cell이 없?다면 True를 리턴하고, 그 외엔 False를 리턴합니다
+    # empty cell이 없다면 True를 리턴하고, 그 외엔 False를 리턴합니다
     def is_full(self):
         
         for i in range(4): 
@@ -150,27 +141,6 @@ class Board:
                 if 0 == self.nums[i][j]:
                     return False
         return True
-
-
-b = Board()
-b.insert()
-b.insert()
-b.insert()
-b.insert()
-b.insert() 
-b.insert()
-b.insert()
-b.insert()
-b.insert()
-print(b)
-print(b.push_left())
-print(b)
-b.insert()
-b.insert()
-print(b)
-b.push_left()
-print(b)
-
 
 # >>> val b = Board()
 # >>> b
@@ -214,16 +184,9 @@ print(b)
 # o----o----o----o----o
 
 def main():
-<<<<<<< Updated upstream
-    b = Board()
-    b.insert()
-    b.insert()
-=======
     board = Board()
     board.insert()
     board.insert()
-    points=0
->>>>>>> Stashed changes
 
     points = 0
     
@@ -232,22 +195,6 @@ def main():
         print(f"{points} points\n")
         word = input("What is your move: ").lower().strip()
         print()
-<<<<<<< Updated upstream
-        if len(s) == 1 and s in "lrud":
-            # points += b.push(s[0])
-            points+=b.push(s)
-        else: continue
-        
-        if b.is_full():
-            print(b)
-            print("\nGame over.")
-            print(f"You have {points} points.")
-            return
-        b.insert()
-
-
-main()
-=======
         if len(word) != 1 or not word in "lrud":
             continue
         if len(word) == 1 and word in "lrud":
@@ -273,4 +220,5 @@ main()
 # row, column
 #
 #
->>>>>>> Stashed changes
+
+main()
