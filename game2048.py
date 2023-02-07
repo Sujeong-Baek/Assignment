@@ -55,8 +55,8 @@ class Board:
                 elif compare_num==self.nums[i][j]:
                     self.nums[i][pos-1]=compare_num*2
                     self.nums[i][j]=0
-                    compare_num=0
                     point+=compare_num*2
+                    compare_num=0
         return point
 
     def push_right(self):
@@ -76,8 +76,8 @@ class Board:
                 elif compare_num==self.nums[i][j]:
                     self.nums[i][pos+1]=compare_num*2
                     self.nums[i][j]=0
-                    compare_num=0
                     point+=compare_num*2
+                    compare_num=0
         return point
 
     def push_up(self):
@@ -97,8 +97,8 @@ class Board:
                 elif compare_num==self.nums[j][i]:
                     self.nums[pos-1][i]=compare_num*2
                     self.nums[j][i]=0
-                    compare_num=0
                     point+=compare_num*2
+                    compare_num=0
         return point
 
     def push_down(self):
@@ -118,8 +118,8 @@ class Board:
                 elif compare_num==self.nums[j][i]:
                     self.nums[pos+1][i]=compare_num*2
                     self.nums[j][i]=0
-                    compare_num=0
                     point+=compare_num*2
+                    compare_num=0
         return point
 
     def push(self, direction):
