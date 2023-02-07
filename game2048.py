@@ -60,23 +60,24 @@ class Board:
         return point
 
     def push_right(self):
+        """오른쪽으로 옮기기"""
         point=0
         for i in range(4):
-            right=[0,0,0,0]
             pos=3
-            pre=0
+            compare_num=0
             for j in range(3,-1,-1):
-                if not self.nums[i][j]:
+                if self.nums[i][j]==0:
                     continue
-                if pre!=self.nums[i][j]:
-                    right[pos]=self.nums[i][j]
-                    pre=self.nums[i][j]
+                if compare_num!=self.nums[i][j]:
+                    compare_num=self.nums[i][j]
+                    self.nums[i][j]=0
+                    self.nums[i][pos]=compare_num
                     pos-=1
-                else:
-                    right[pos+1]=pre*2
-                    point+=pre*2
-                    pre=0
-            self.nums[i]=right
+                elif compare_num==self.nums[i][j]:
+                    self.nums[i][pos+1]=compare_num*2
+                    self.nums[i][j]=0
+                    compare_num=0
+                    point+=compare_num*2
         return point
 
     def push_up(self):
@@ -217,7 +218,5 @@ def main():
 # [y][x]
 # (x, y)
 # row, column
-#
-#
 
 main()
