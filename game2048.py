@@ -123,19 +123,19 @@ class Board:
         return point
 
     def push(self, direction):
+        """lrud를 받아서 self.push_()를 리턴합니다"""
         if direction == 'l':
             return self.push_left()
-        elif direction == 'r':
+        if direction == 'r':
             return self.push_right()
-        elif direction == 'u':
+        if direction == 'u':
             return self.push_up()
-        else:
+        if direction == 'd':
             return self.push_down()
 
-    # empty cell이 없다면 True를 리턴하고, 그 외엔 False를 리턴합니다
     def is_full(self):
-        
-        for i in range(4): 
+        """empty cell이 없다면 True를 리턴하고, 그 외엔 False를 리턴합니다"""
+        for i in range(4):
             for j in range(4):
                 if 0 == self.nums[i][j]:
                     return False
@@ -183,12 +183,12 @@ class Board:
 # o----o----o----o----o
 
 def main():
+    """Board()생성, 조건에 맞게 insert()하고 점수를 출력하며 게임하기"""
     board = Board()
     board.insert()
     board.insert()
 
     points = 0
-    
     while True:
         print(board)
         print(f"{points} points\n")
@@ -198,7 +198,6 @@ def main():
             continue
         if len(word) == 1 and word in "lrud":
             points+=board.push(word)
-        
             board.insert()
         if board.is_full():
             print(board)
