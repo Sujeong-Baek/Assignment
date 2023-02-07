@@ -39,25 +39,25 @@ class Board:
     # ex. 0 2 2 4 >> 4 4 0 0
     # 두 cell이 merge할 때마다 새로 생긴 cell 값을 포인트로 얻습니다
     def push_left(self):
+        """왼쪽으로 옮기기"""
         point=0
         for i in range(4):
-            left=[0,0,0,0]
             pos=0
-            pre=0
+            compare_num=0
             for j in range(4):
-                if not self.nums[i][j]:
+                if self.nums[i][j]==0:
                     continue
-                if pre!=self.nums[i][j]:
-                    left[pos]=self.nums[i][j]
-                    pre=self.nums[i][j]
+                if compare_num!=self.nums[i][j]:
+                    compare_num=self.nums[i][j]
+                    self.nums[i][j]=0
+                    self.nums[i][pos]=compare_num
                     pos+=1
-                else:
-                    left[pos-1]=pre*2
-                    point+=pre*2
-                    pre=0
-            self.nums[i]=left
+                elif compare_num==self.nums[i][j]:
+                    self.nums[i][pos-1]=compare_num*2
+                    self.nums[i][j]=0
+                    compare_num=0
+                    point+=compare_num*2
         return point
-
 
     def push_right(self):
         point=0
@@ -198,10 +198,9 @@ def main():
         if len(word) != 1 or not word in "lrud":
             continue
         if len(word) == 1 and word in "lrud":
-            pre=board.nums.copy()
             points+=board.push(word)
-            if pre!=board.nums:
-                board.insert()
+        
+            board.insert()
         if board.is_full():
             print(board)
             print("\nGame over.")
