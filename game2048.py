@@ -1,31 +1,42 @@
+"""4 x 4 integeMMr list이고 0은 empty를 나타냅니다"""
 import random
-# 4 x 4 integer list이고 0은 empty를 나타냅니다
 class Board:
+    """board"""
     def __init__(self):
-        self.nums =[[0]*4 for _ in range(4)]
+        self.nums = [[0]*4 for _ in range(4)]
 
     # board를 출력했을 때의 나타날 string을 리턴해야합니다
     def __str__(self):
         line = ""
-        top="o----o----o----o----o\n"
+        top = "o----o----o----o----o\n"
         side = "|    |    |    |    |\n"
         for i in range(4):
+<<<<<<< Updated upstream
             line+=top+side+"|"
             for j in self.nums[i]:
                 if j==0: j=" "
                 line += f'{j:^4}|'
             line += "\n"+side
         return line+top    
+=======
+            line += f"{top}{side}|"
+            for j in self.nums[i]:
+                if j == 0:
+                    j = ' '
+                line += f"{j:^4}|"
+            line += f"\n{side}"
+        return line + top
+>>>>>>> Stashed changes
 
-    # empty cell을 random하게 골라서 2 또는 4로 세팅합니다
     def insert(self):
+        """empty cell을 random하게 골라서 2 또는 4로 세팅합니다"""
         while True:
-            x=random.randrange(4)
-            y=random.randrange(4)
-            num=self.nums[x][y]
+            row=random.randrange(4)
+            col=random.randrange(4)
+            num=self.nums[row][col]
             if num == 0:
                 num=random.choice([2,4])
-                self.nums[x][y]=num
+                self.nums[row][col]=num
                 return
 
     # 각각의 row에 대해 실행합니다
@@ -77,11 +88,10 @@ class Board:
             self.nums[i]=right
         return point
 
-
     def push_up(self):
         point=0
         up=[[0]*4 for _ in range(4)]
-        pos_x=0
+        pos_x=0 # pos_x 날리고 i 쓰기
         for i in range(4):
             pos_y=0
             pre=0
@@ -99,7 +109,6 @@ class Board:
             pos_x+=1
         self.nums=up
         return point
-            
 
     def push_down(self):
         point=0
@@ -205,17 +214,25 @@ print(b)
 # o----o----o----o----o
 
 def main():
+<<<<<<< Updated upstream
     b = Board()
     b.insert()
     b.insert()
+=======
+    board = Board()
+    board.insert()
+    board.insert()
+    points=0
+>>>>>>> Stashed changes
 
     points = 0
     
     while True:
-        print(b)
+        print(board)
         print(f"{points} points\n")
-        s = input("What is your move: ").lower().strip()
+        word = input("What is your move: ").lower().strip()
         print()
+<<<<<<< Updated upstream
         if len(s) == 1 and s in "lrud":
             # points += b.push(s[0])
             points+=b.push(s)
@@ -230,3 +247,30 @@ def main():
 
 
 main()
+=======
+        if len(word) != 1 or not word in "lrud":
+            continue
+        if len(word) == 1 and word in "lrud":
+            pre=board.nums.copy()
+            points+=board.push(word)
+            if pre!=board.nums:
+                board.insert()
+        if board.is_full():
+            print(board)
+            print("\nGame over.")
+            print(f"You have {points} points.")
+            return
+
+# 1. main에서 pre 안쓰도록 변경
+# 2. push_left, push_right, ... 에서 left, right 안쓰고 board.nums 의 숫자를 바로 변경
+# 3. pre 변수명 바꾸기
+# 4. x, y => r, c  으로 바꾸기
+# [[(0,0), (0,1), (0,2)],
+#      [(1,0), (1,1), (1,2)],
+#    [(2,0), (2,1), (2,2)]]
+# [y][x]
+# (x, y)
+# row, column
+#
+#
+>>>>>>> Stashed changes
