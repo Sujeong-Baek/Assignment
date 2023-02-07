@@ -252,7 +252,6 @@ def find_empty(board):
         if 0 in i[1]:
             return Pos(i[0], i[1].index(0))
     return None
-    
 # >>> left = Pos(0, 1)
 # >>> right = Pos(0, -1)
 # >>> up = Pos(1, 0)
