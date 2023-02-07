@@ -81,25 +81,24 @@ class Board:
         return point
 
     def push_up(self):
+        """위쪽으로 옮기기"""
         point=0
-        up=[[0]*4 for _ in range(4)]
-        pos_x=0 # pos_x 날리고 i 쓰기
         for i in range(4):
-            pos_y=0
-            pre=0
+            pos=0
+            compare_num=0
             for j in range(4):
-                if not self.nums[j][i]:
+                if self.nums[j][i]==0:
                     continue
-                if pre!=self.nums[j][i]:
-                    up[pos_y][pos_x]=self.nums[j][i]
-                    pre=self.nums[j][i]
-                    pos_y+=1
-                else:
-                    up[pos_y-1][pos_x]=pre*2
-                    point+=pre*2
-                    pre=0
-            pos_x+=1
-        self.nums=up
+                if compare_num!=self.nums[j][i]:
+                    compare_num=self.nums[j][i]
+                    self.nums[j][i]=0
+                    self.nums[pos][i]=compare_num
+                    pos+=1
+                elif compare_num==self.nums[j][i]:
+                    self.nums[pos-1][i]=compare_num*2
+                    self.nums[j][i]=0
+                    compare_num=0
+                    point+=compare_num*2
         return point
 
     def push_down(self):
