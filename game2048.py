@@ -1,4 +1,4 @@
-"""4 x 4 integeMMr list이고 0은 empty를 나타냅니다"""
+"""insert()에서 random하게 세팅하기 위해 사용합니다."""
 import random
 class Board:
     """board"""
@@ -45,7 +45,7 @@ class Board:
             pos=0
             compare_num=0
             for j in range(4):
-                if self.nums[i][j]==0:
+                if not self.nums[i][j]:
                     continue
                 if compare_num!=self.nums[i][j]:
                     compare_num=self.nums[i][j]
@@ -66,7 +66,7 @@ class Board:
             pos=3
             compare_num=0
             for j in range(3,-1,-1):
-                if self.nums[i][j]==0:
+                if not self.nums[i][j]:
                     continue
                 if compare_num!=self.nums[i][j]:
                     compare_num=self.nums[i][j]
@@ -87,7 +87,7 @@ class Board:
             pos=0
             compare_num=0
             for j in range(4):
-                if self.nums[j][i]==0:
+                if not self.nums[j][i]:
                     continue
                 if compare_num!=self.nums[j][i]:
                     compare_num=self.nums[j][i]
@@ -108,7 +108,7 @@ class Board:
             pos=3
             compare_num=0
             for j in range(3,-1,-1):
-                if self.nums[j][i]==0:
+                if not self.nums[j][i]:
                     continue
                 if compare_num!=self.nums[j][i]:
                     compare_num=self.nums[j][i]
