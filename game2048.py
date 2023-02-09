@@ -14,7 +14,7 @@ class Board:
         for i in range(4):
             line += f"{top}{side}|"
             for j in self.nums[i]:
-                if j == 0:
+                if not j:
                     j = ' '
                 line += f"{j:^4}|"
             line += f"\n{side}"
@@ -25,10 +25,8 @@ class Board:
         while True:
             row=random.randrange(4)
             col=random.randrange(4)
-            num=self.nums[row][col]
-            if num == 0:
-                num=random.choice([2,4])
-                self.nums[row][col]=num
+            if not self.nums[row][col]:
+                self.nums[row][col]=random.choice([2,4])
                 return
 
     # 각각의 row에 대해 실행합니다
@@ -42,7 +40,7 @@ class Board:
     def push_left(self):
         """왼쪽으로 옮기기"""
         point=0
-        count_move=0
+        moved = False
         for i in range(4):
             pos=0
             compare_num=0            
@@ -54,17 +52,15 @@ class Board:
                     self.nums[i][j]=0
                     self.nums[i][pos]=compare_num
                     if j!=pos:
-                        count_move+=1
+                        moved = True
                     pos+=1    
                 elif compare_num==self.nums[i][j]:
                     self.nums[i][pos-1]=compare_num*2
                     self.nums[i][j]=0
                     point+=compare_num*2
                     compare_num=0
-                    count_move+=1
-        if count_move !=0:
-            return point, True
-        return point, False
+                    moved = True
+        return point, moved
         
     def push_right(self):
         """오른쪽으로 옮기기"""
