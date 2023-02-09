@@ -1,5 +1,6 @@
-"""4 x 4 integeMMr list이고 0은 empty를 나타냅니다"""
+"""insert()에서 random하게 세팅하기 위해 사용합니다."""
 import random
+
 class Board:
     """board"""
     def __init__(self):
@@ -13,7 +14,7 @@ class Board:
         for i in range(4):
             line += f"{top}{side}|"
             for j in self.nums[i]:
-                if j == 0:
+                if not j:
                     j = ' '
                 line += f"{j:^4}|"
             line += f"\n{side}"
@@ -24,10 +25,8 @@ class Board:
         while True:
             row=random.randrange(4)
             col=random.randrange(4)
-            num=self.nums[row][col]
-            if num == 0:
-                num=random.choice([2,4])
-                self.nums[row][col]=num
+            if not self.nums[row][col]:
+                self.nums[row][col]=random.choice([2,4])
                 return
 
     # 각각의 row에 대해 실행합니다
@@ -39,104 +38,125 @@ class Board:
     # ex. 0 2 2 4 >> 4 4 0 0
     # 두 cell이 merge할 때마다 새로 생긴 cell 값을 포인트로 얻습니다
     def push_left(self):
+        """왼쪽으로 옮기기"""
         point=0
+        moved = False
         for i in range(4):
-            left=[0,0,0,0]
             pos=0
-            pre=0
+            compare_num=0            
             for j in range(4):
                 if not self.nums[i][j]:
                     continue
-                if pre!=self.nums[i][j]:
-                    left[pos]=self.nums[i][j]
-                    pre=self.nums[i][j]
-                    pos+=1
-                else:
-                    left[pos-1]=pre*2
-                    point+=pre*2
-                    pre=0
-            self.nums[i]=left
-        return point
-
-
+                if compare_num!=self.nums[i][j]:
+                    compare_num=self.nums[i][j]
+                    self.nums[i][j]=0
+                    self.nums[i][pos]=compare_num
+                    if j!=pos:
+                        moved = True
+                    pos+=1    
+                elif compare_num==self.nums[i][j]:
+                    self.nums[i][pos-1]=compare_num*2
+                    self.nums[i][j]=0
+                    point+=compare_num*2
+                    compare_num=0
+                    moved = True
+        return point, moved
+        
     def push_right(self):
+        """오른쪽으로 옮기기"""
         point=0
+        count_move=0
         for i in range(4):
-            right=[0,0,0,0]
             pos=3
-            pre=0
+            compare_num=0
             for j in range(3,-1,-1):
                 if not self.nums[i][j]:
                     continue
-                if pre!=self.nums[i][j]:
-                    right[pos]=self.nums[i][j]
-                    pre=self.nums[i][j]
+                if compare_num!=self.nums[i][j]:
+                    compare_num=self.nums[i][j]
+                    self.nums[i][j]=0
+                    self.nums[i][pos]=compare_num
+                    if j != pos:
+                        count_move+=1
                     pos-=1
-                else:
-                    right[pos+1]=pre*2
-                    point+=pre*2
-                    pre=0
-            self.nums[i]=right
-        return point
+                elif compare_num==self.nums[i][j]:
+                    self.nums[i][pos+1]=compare_num*2
+                    self.nums[i][j]=0
+                    point+=compare_num*2
+                    compare_num=0
+                    count_move+=1
+        if count_move!=0:
+            return point, True
+        return point, False
 
     def push_up(self):
+        """위쪽으로 옮기기"""
         point=0
-        up=[[0]*4 for _ in range(4)]
-        pos_x=0 # pos_x 날리고 i 쓰기
+        count_move=0
         for i in range(4):
-            pos_y=0
-            pre=0
+            pos=0
+            compare_num=0
             for j in range(4):
                 if not self.nums[j][i]:
                     continue
-                if pre!=self.nums[j][i]:
-                    up[pos_y][pos_x]=self.nums[j][i]
-                    pre=self.nums[j][i]
-                    pos_y+=1
-                else:
-                    up[pos_y-1][pos_x]=pre*2
-                    point+=pre*2
-                    pre=0
-            pos_x+=1
-        self.nums=up
-        return point
+                if compare_num!=self.nums[j][i]:
+                    compare_num=self.nums[j][i]
+                    self.nums[j][i]=0
+                    self.nums[pos][i]=compare_num
+                    if j!=pos:
+                        count_move+=1
+                    pos+=1
+                elif compare_num==self.nums[j][i]:
+                    self.nums[pos-1][i]=compare_num*2
+                    self.nums[j][i]=0
+                    point+=compare_num*2
+                    compare_num=0
+                    count_move+=1
+        if count_move != 0:
+            return point, True
+        return point, False
 
     def push_down(self):
+        """아래쪽으로 옮기기"""
         point=0
-        down=[[0]*4 for _ in range(4)]
-        pos_x=0
+        count_move=0
         for i in range(4):
-            pos_y=3
-            pre=0
+            pos=3
+            compare_num=0
             for j in range(3,-1,-1):
                 if not self.nums[j][i]:
                     continue
-                if pre!=self.nums[j][i]:
-                    down[pos_y][pos_x]=self.nums[j][i]
-                    pre=self.nums[j][i]
-                    pos_y-=1
-                else:
-                    down[pos_y+1][pos_x]=pre*2
-                    point+=pre*2
-                    pre=0
-            pos_x+=1
-        self.nums=down
-        return point
+                if compare_num!=self.nums[j][i]:
+                    compare_num=self.nums[j][i]
+                    self.nums[j][i]=0
+                    self.nums[pos][i]=compare_num
+                    if j != pos:
+                        count_move+=1
+                    pos-=1
+                elif compare_num==self.nums[j][i]:
+                    self.nums[pos+1][i]=compare_num*2
+                    self.nums[j][i]=0
+                    point+=compare_num*2
+                    compare_num=0
+                    count_move+=1
+        if count_move !=0:
+            return point, True
+        return point, False
 
     def push(self, direction):
+        """lrud를 받아서 self.push_()를 리턴합니다"""
         if direction == 'l':
             return self.push_left()
-        elif direction == 'r':
+        if direction == 'r':
             return self.push_right()
-        elif direction == 'u':
+        if direction == 'u':
             return self.push_up()
-        else:
+        if direction == 'd':
             return self.push_down()
 
-    # empty cell이 없다면 True를 리턴하고, 그 외엔 False를 리턴합니다
     def is_full(self):
-        
-        for i in range(4): 
+        """empty cell이 없다면 True를 리턴하고, 그 외엔 False를 리턴합니다"""
+        for i in range(4):
             for j in range(4):
                 if 0 == self.nums[i][j]:
                     return False
@@ -184,12 +204,12 @@ class Board:
 # o----o----o----o----o
 
 def main():
+    """Board()생성, 조건에 맞게 insert()하고 점수를 출력하며 게임하기"""
     board = Board()
     board.insert()
     board.insert()
 
     points = 0
-    
     while True:
         print(board)
         print(f"{points} points\n")
@@ -198,9 +218,9 @@ def main():
         if len(word) != 1 or not word in "lrud":
             continue
         if len(word) == 1 and word in "lrud":
-            pre=board.nums.copy()
-            points+=board.push(word)
-            if pre!=board.nums:
+            point, move =board.push(word)
+            points+=point
+            if move:
                 board.insert()
         if board.is_full():
             print(board)
@@ -218,7 +238,3 @@ def main():
 # [y][x]
 # (x, y)
 # row, column
-#
-#
-
-main()
