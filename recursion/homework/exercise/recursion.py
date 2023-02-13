@@ -12,10 +12,9 @@
 # 123454321 contains 2 threes
 # 12333983393893 contains 7 threes
 def number_of_threes(n):
-    if n==0:
+    if not n:
         return 0
     return (n%10==3)+number_of_threes(n//10)
-    raise NotImplementedError
 
 # palindrome은 뒤집어읽어도 같은 string을 말합니다
 # 주어진 s가 palindrome인지 True, False로 리턴하세요
@@ -27,14 +26,11 @@ def number_of_threes(n):
 # 'era' is a palindrome? False
 # 'amanaplanacanalpanama' is a palindrome? True
 def palindrome(s):
-    s=list(s)
     if len(s)<=1 :
         return True
-    if len(s)>1 and s[0]==s[-1]:
-        del s[0],s[-1]
-        return palindrome(s)
+    if s[0]==s[-1]:
+        return palindrome(s[1:-1])
     return False
-    raise NotImplementedError
 
 # 주어진 수 n을 log2를 취한 integer를 반환하는 함수입니다.
 # 소숫점 아랫값은 내림합니다.
@@ -57,5 +53,5 @@ if __name__ == "__main__":
               "amanaplanacanalpanama" ]:
         print("'%s' is a palindrome? %s" % (s, palindrome(s)))
     print()
-    for n in [7, 8, 17, 1000, 1024, 2500, 1000000, 1000000000]:
-        print("binLog(%d) = %d" % (n, bin_log(n)))
+    # for n in [7, 8, 17, 1000, 1024, 2500, 1000000, 1000000000]:
+    #     print("binLog(%d) = %d" % (n, bin_log(n)))

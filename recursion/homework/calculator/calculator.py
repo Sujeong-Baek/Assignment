@@ -58,16 +58,16 @@ def parse_item(tok):
         if t.value=="pi":
             return math.pi
         raise InputError("Variables not yet implemented", t)
-    if not t.isSymbol("(") and not t.isSymbol("|"):
-        raise InputError("Expected number, variable, or '(', or '|'", t)
     expr = parse_expression(tok)
     if t.isSymbol("("):
         if not tok[0].isSymbol(")"):
             raise InputError("Expected operator, or ')'", tok[0])
-    if t.isSymbol("|"):
+    elif t.isSymbol("|"):
         expr=abs(expr)
         if not tok[0].isSymbol("|"):
             raise InputError("Expected operator, or '|'", tok[0])
+    else:
+        raise InputError("Expected number, variable, or '(', or '|'", t)
     tok.pop(0)
     return expr
 
