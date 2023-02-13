@@ -43,7 +43,9 @@ def palindrome(s):
 # binLog(1000000) = 19
 # binLog(1000000000) = 29
 def bin_log(n):
-    raise NotImplementedError
+    if n<2:
+        return 0
+    return 1+bin_log(n/2)
 
 if __name__ == "__main__":
     for n in [ 0, 7, 3, 13, 33333, 123454321, 12333983393893 ]:
@@ -53,5 +55,5 @@ if __name__ == "__main__":
               "amanaplanacanalpanama" ]:
         print("'%s' is a palindrome? %s" % (s, palindrome(s)))
     print()
-    # for n in [7, 8, 17, 1000, 1024, 2500, 1000000, 1000000000]:
-    #     print("binLog(%d) = %d" % (n, bin_log(n)))
+    for n in [7, 8, 17, 1000, 1024, 2500, 1000000, 1000000000]:
+        print("binLog(%d) = %d" % (n, bin_log(n)))
