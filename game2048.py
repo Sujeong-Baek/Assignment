@@ -216,6 +216,13 @@ def main():
             points+=point
             if moved:
                 board.insert()
+        for i in range(4):
+            for j in range(4):
+                if 2048 == board.nums[i][j]:
+                    print(board)
+                    print("\nYou win!!!")
+                    print(f"You have {points} points.")
+                    return
         if board.is_full():
             print(board)
             print("\nGame over.")
@@ -232,6 +239,3 @@ def main():
 # [y][x]
 # (x, y)
 # row, column
-
-
-main()
