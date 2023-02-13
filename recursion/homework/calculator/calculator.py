@@ -40,6 +40,7 @@
 # ==> 7
 
 import tokens
+import math
 
 class InputError(Exception):
     def __init__(self, msg, token):
@@ -52,12 +53,21 @@ def parse_item(tok):
     if t.isNumber():
         return t.value
     if t.isIdentifier():
+        if t.value=="e":
+            return math.e
+        if t.value=="pi":
+            return math.pi
         raise InputError("Variables not yet implemented", t)
-    if not t.isSymbol("("):
-        raise InputError("Expected number, variable, or '('", t)
     expr = parse_expression(tok)
-    if not tok[0].isSymbol(")"):
-        raise InputError("Expected operator or ')'", tok[0])
+    if t.isSymbol("("):
+        if not tok[0].isSymbol(")"):
+            raise InputError("Expected operator, or ')'", tok[0])
+    elif t.isSymbol("|"):
+        expr=abs(expr)
+        if not tok[0].isSymbol("|"):
+            raise InputError("Expected operator, or '|'", tok[0])
+    else:
+        raise InputError("Expected number, variable, or '(', or '|'", t)
     tok.pop(0)
     return expr
 
@@ -80,6 +90,8 @@ def parse_term(tok):
         tok.pop(0)
         rhs = parse_factor(tok)
         if t.isSymbol("/"):
+            if rhs==0:
+                raise InputError("Division by zero",t)
             result = result / rhs
         else:
             result = result * rhs
