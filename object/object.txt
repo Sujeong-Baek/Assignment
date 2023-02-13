@@ -1,0 +1,53 @@
+# object
+
+integer, boolean, string, Token
+
+a = 3
+b = True
+l = [1,2,3,4]
+t = (1,2,3)
+t = Token()
+
+class : custom한 type
+
+object
+    state; 정보
+    method: 함수
+
+mutable vs immutable
+mutable : 변경가능
+immutable: 변경불가능 - string, number, tuple
+
+모든 Object는 heap
+지역변수는 stack
+
+stack                   heap
+lst                     [1,2,3]
+lst2
+                        Token()
+                        Token()
+n                     
+                            5
+언어 종류
+1. garbage collection - python, java, ...
+2. 사용자가 직접 - C , memory leak
+3. rust - 변수가 살아있을 수 있는 영역이 정해져있어서 그 영역을 벗어나면 바로 삭제
+
+__init__ : constructor (생성자)
+t = Token(1, 1, "number")
+
+override 
+
+client code - calculator
+
+array : list와 비슷하지만 처음 정의할 때 사이즈가 정해짐
+ADT: abstract data type
+Array(n) : constructor
+len(a)
+a[i]
+for el in a : iterate
+
+syntax sugar
+
+for num in [1,2,3,4]:
+for num in 3:
