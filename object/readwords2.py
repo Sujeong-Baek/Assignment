@@ -1,7 +1,6 @@
 # readwords2.py
 # read many words from a file and store using an array
 
-import sys
 import time
 # from array import Array
 
