@@ -43,25 +43,22 @@ class Board:
         moved = False
         for i in range(4):
             pos=0
-            compare_num=0            
+            compare_num=0
             for j in range(4):
-                if not self.nums[i][j]:
+                if self.nums[i][j]==0:
                     continue
                 if compare_num!=self.nums[i][j]:
                     compare_num=self.nums[i][j]
                     self.nums[i][j]=0
                     self.nums[i][pos]=compare_num
-                    if j!=pos:
-                        moved = True
-                    pos+=1    
+                    pos+=1
                 elif compare_num==self.nums[i][j]:
                     self.nums[i][pos-1]=compare_num*2
                     self.nums[i][j]=0
-                    point+=compare_num*2
                     compare_num=0
-                    moved = True
-        return point, moved
-        
+                    point+=compare_num*2
+        return point
+
     def push_right(self):
         """오른쪽으로 옮기기"""
         point=0
@@ -212,17 +209,7 @@ def main():
         if len(word) != 1 or not word in "lrud":
             continue
         if len(word) == 1 and word in "lrud":
-            point, moved =board.push(word)
-            points+=point
-            if moved:
-                board.insert()
-                for i in range(4):
-                    for j in range(4):
-                        if 2048 == board.nums[i][j]:
-                            print(board)
-                            print("\nYou win!!!")
-                            print(f"You have {points} points.")
-                            return
+
         if board.is_full():
             print(board)
             print("\nGame over.")
