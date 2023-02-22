@@ -209,6 +209,17 @@ def main():
         if len(word) != 1 or not word in "lrud":
             continue
         if len(word) == 1 and word in "lrud":
+            point, moved =board.push(word)
+            points+=point
+            if moved:
+                board.insert()
+                for i in range(4):
+                    for j in range(4):
+                        if 2048 == board.nums[i][j]:
+                            print(board)
+                            print("\nYou win!!!")
+                            print(f"You have {points} points.")
+                            return
 
         if board.is_full():
             print(board)
