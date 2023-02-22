@@ -1,7 +1,7 @@
-# readwords2.py
-# read many words from a file and store using an array
+# readwords3.py
+# read many words from a file and
+# store using an array with some reserve capacity
 
-import sys
 import time
 from array import Array
 
@@ -10,25 +10,26 @@ fname = "words-1000.txt"
 
 class GrowArray():
     def __init__(self):
-        self._a = None
+        self._a = Array(32)
+        self._size = 0
 
     def __len__(self):
-        return len(self._a)
+        return self._size
 
     def __getitem__(self, i):
         return self._a[i]
 
     def append(self, el):
-        if self._a == None:
-            self._a = Array(1)
-            self._a[0] = el
-        else:
+        if self._size == len(self._a):
+            # array is full, make a new one
             oldA = self._a
             n = len(oldA)
-            self._a = Array(n + 1)
+            self._a = Array(n + 32)
+            # self._a = Array(2 * n)
             for i in range(n):
                 self._a[i] = oldA[i]
-            self._a[n] = el
+        self._a[self._size] = el
+        self._size += 1
 
 
 def readWords():
