@@ -3,11 +3,11 @@
 
 import time
 
-fname = "words-1000.txt"
+fname = r"C:\Users\zxcwl\Desktop\Python-assignment\object\words-20000.txt"
 
 
 def readWords():
-    f = open(fname, "r")
+    f = open(fname, "r", encoding='UTF8')
     words = []
     for line in f.readlines():
         s = line.strip()

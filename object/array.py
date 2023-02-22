@@ -48,3 +48,12 @@ class _ArrayIterator:
             return entry
         else:
             raise StopIteration
+
+# 같은 종류의 element, 
+# 주소가 20, 한 element 가 차지하는게 10이면 array[3] = 20 + 10*30
+# array[0] : 20
+# array[1]: 30
+# array[2]: 40
+# array[3]: 50
+# array[i]에 접근하는데 O(1)
+
