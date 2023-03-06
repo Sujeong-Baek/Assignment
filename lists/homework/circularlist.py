@@ -16,11 +16,8 @@ class CircularList:
     def __init__(self, el):
         self.front=Node(el)
         self.rear=self.front
-
-        self.front.next=self.rear
-        self.front.prev=self.rear
-        self.rear.next=self.front
-        self.rear.prev=self.front
+        self.front.next=self.front
+        self.front.prev=self.front
 
     def first(self):
         return self.front
@@ -28,14 +25,16 @@ class CircularList:
     def __repr__(self):
         res="["
         p=self.front
-        while p!=self.rear:
+        while True:
             res+=p.el
             if p.next != self.front:
                 res+=", "
             p=p.next
-        res+=p.el+"]"
+            if p==self.front:
+                res+="]"
+                break
         return res
-
+    
     def remove(self, p):
         p.prev.next=p.next
         p.next.prev=p.prev
@@ -54,14 +53,19 @@ class CircularList:
         return count
 
 
-    def insert(self, p, el):
-        el=Node(el,)
-        raise NotImplementedError
+    def insert(self, p, el): 
+        el=Node(el)
+        p.prev.next=el
+        el.prev=p.prev
+        el.next=p
+        p.prev=el
+        
 
     def append(self, x):
-        x=Node(x, self.front, self.rear)
+        x=Node(x)
         self.front.prev=x
         self.rear.next=x
+        x.prev=self.rear
+        x.next=self.front
         self.rear=x
-
 
