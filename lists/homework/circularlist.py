@@ -1,6 +1,8 @@
 #
 # A circular doubly-linked list
 #
+class ValueError(Exception):
+    pass
 
 class Node:
     def __init__(self, el, next=None, prev=None):
@@ -36,13 +38,16 @@ class CircularList:
         return res
     
     def remove(self, p):
+        if len(self)==1:
+            raise ValueError("Cannot remove only node of a CircularList")
+        
         p.prev.next=p.next
         p.next.prev=p.prev
+
         if p==self.rear:
             self.rear=p.prev
         elif p==self.front:
             self.front=p.next
-
 
     def __len__(self):
         count=1
@@ -68,4 +73,3 @@ class CircularList:
         x.prev=self.rear
         x.next=self.front
         self.rear=x
-
