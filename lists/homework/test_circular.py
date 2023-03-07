@@ -77,7 +77,7 @@ class TestCircularList(unittest.TestCase):
         self.consistency(s)
         self.assertEqual(str(s), "[of]")
         self.assertEqual(len(s), 1)
-        with self.assertRaisesRegex(ValueError,
+        with self.assertRaisesRegex(sol.ValueError,
                                     "Cannot remove only node of a CircularList"):
             s.remove(s.first())
 
