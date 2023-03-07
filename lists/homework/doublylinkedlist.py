@@ -9,7 +9,9 @@ class Node:
     self.prev = prev
 
   def __repr__(self):
-    return "<" + repr(self.el) + ">"
+    return "<" + repr(self.el) + ">"  
+
+
 
 class DoublyLinkedList:
   def __init__(self):
@@ -64,23 +66,83 @@ class DoublyLinkedList:
     n.prev.next = n.next
     n.next.prev = n.prev
 
-  def find_first(self, x):
-    raise NotImplementedError
+  def find_first(self, x):    
+    p=self._front.next
+    index=0
+
+    if p.el == x:
+      return index
+    
+    if p.el != x:
+      while p.el !=x and p is not None:
+        index += 1
+        p=p.next
+        if p is None:
+          return -1
+      return index
 
   def find_last(self, x):
-    raise NotImplementedError
+    p=self._rear.prev
+    index=len(self)-1
+
+    if p.el == x :
+      return index
+    
+    if p.el != x:
+      while p.el != x and p is not None:
+        index -= 1
+        p=p.prev
+        if p is None:
+          return -1
+      return index
 
   def count(self, x):
-    raise NotImplementedError
+    count=0
+    p=self._front.next
+    while p != self._rear:
+      if p.el == x:
+        count+=1
+      p=p.next
+    return count
 
   def remove_first(self, x):
-    raise NotImplementedError
+    count=self.find_first(x)
+    p=self._front.next
+    while count>0 :
+      p=p.next
+      count-=1
+    p.prev.next=p.next
+    p.next.prev=p.prev
 
   def remove_last(self, x):
-    raise NotImplementedError
+    count=self.find_last(x)
+    p=self._front.next
+    while count>0:
+      p=p.next
+      count-=1
+    p.prev.next=p.next
+    p.next.prev=p.prev
 
   def remove_all(self, x):
-    raise NotImplementedError
+    while self.find_first(x) != -1:
+      self.remove_first(x)
 
   def takeout(self, n, m):
-    raise NotImplementedError
+    answer=DoublyLinkedList()
+    n_count=n
+    m_count=m-n+1
+    p=self._front.next
+    while n_count>0:
+      p=p.next
+      n_count-=1
+    p.prev.next=p.next
+    p.next.prev=p.prev
+    while m_count>0:
+      answer.append(p.el)
+      p.prev.next=p.next
+      p.next.prev=p.prev
+      p=p.next
+      m_count-=1
+    return answer
+
+
