@@ -9,7 +9,9 @@ class Node:
     self.prev = prev
 
   def __repr__(self):
-    return "<" + repr(self.el) + ">"
+    return "<" + repr(self.el) + ">"  
+
+
 
 class DoublyLinkedList:
   def __init__(self):
@@ -64,23 +66,59 @@ class DoublyLinkedList:
     n.prev.next = n.next
     n.next.prev = n.prev
 
-  def find_first(self, x):
-    raise NotImplementedError
+  def find_first(self, x):    
+    p=self._front.next
+    while p != self._rear and p.el !=x:
+    # while p.el != x and p is not None:
+      p=p.next
+    return p if p != self._rear else None
 
   def find_last(self, x):
-    raise NotImplementedError
+    p=self._rear.prev
+    while p != self._front and p.el != x:
+        p=p.prev
+    return p if p != self._front else None
 
   def count(self, x):
-    raise NotImplementedError
+    count=0
+    p=self._front.next
+    while p != self._rear:
+      if p.el == x:
+        count+=1
+      p=p.next
+    return count
 
   def remove_first(self, x):
-    raise NotImplementedError
+    node=self.find_first(x) # 99
+    if not node:
+      return    
+    node.prev.next=node.next
+    node.next.prev=node.prev
+    
 
   def remove_last(self, x):
-    raise NotImplementedError
+    node=self.find_last(x)
+    if not node:
+      return
+    node.prev.next=node.next
+    node.next.prev=node.prev
 
-  def remove_all(self, x):
-    raise NotImplementedError
+  def remove_all(self, x): # x = 3
+    node=self._front.next
+    while node != self._rear: # [1,2,,5,3,5,3,3,]
+      if node.el==x:
+        self.remove(node)
+      node=node.next
+
 
   def takeout(self, n, m):
-    raise NotImplementedError
+    answer=DoublyLinkedList()
+    n.prev.next=m.next
+    m.next.prev=n.prev
+    answer._front.next=n
+    n.prev=answer._front
+    answer._rear.prev=m
+    m.next=answer._rear
+   
+    return answer
+
