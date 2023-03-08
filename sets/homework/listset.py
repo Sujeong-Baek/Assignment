@@ -1,7 +1,7 @@
 # listset.py
 # Implementation of Set ADT using a Python list
 
-class set():
+class Set():
     def __init__(self, elements=None):
         self._data = []  # empty list = empty set
         if elements:
@@ -46,17 +46,25 @@ class set():
         return t.issubset(self)
 
     def union(self, t):
-        newSet = set()
-        newSet._data.extend(self._data)  # copy elements to new set
+        newSet = Set()
+        newSet._data.extend(self._data)
         for el in t:
             newSet.add(el)
         return newSet
 
     def intersection(self, t):
-        raise NotImplementedError
+        newSet = Set()
+        for el in self._data:
+            if el in t:
+                newSet.add(el)
+        return newSet
 
     def difference(self, t):
-        raise NotImplementedError
+        newSet = Set()
+        newSet._data.extend(self._data)
+        for el in t:
+            newSet.discard(el)
+        return newSet        
 
     def __iter__(self):
         return _SetIterator(self._data)
