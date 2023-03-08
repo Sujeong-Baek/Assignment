@@ -68,33 +68,16 @@ class DoublyLinkedList:
 
   def find_first(self, x):    
     p=self._front.next
-    index=0
-
-    if p.el == x:
-      return index
-    
-    if p.el != x:
-      while p.el !=x and p is not None:
-        index += 1
-        p=p.next
-        if p is None:
-          return -1
-      return index
+    while p != self._rear and p.el !=x:
+    # while p.el != x and p is not None:
+      p=p.next
+    return p if p != self._rear else None
 
   def find_last(self, x):
     p=self._rear.prev
-    index=len(self)-1
-
-    if p.el == x :
-      return index
-    
-    if p.el != x:
-      while p.el != x and p is not None:
-        index -= 1
+    while p != self._front and p.el != x:
         p=p.prev
-        if p is None:
-          return -1
-      return index
+    return p if p != self._front else None
 
   def count(self, x):
     count=0
@@ -106,46 +89,36 @@ class DoublyLinkedList:
     return count
 
   def remove_first(self, x):
-    count=self.find_first(x)
-    if count==-1:
-      return
-    p=self._front.next
-    while count>0 :
-      p=p.next
-      count-=1
-    p.prev.next=p.next
-    p.next.prev=p.prev
+    node=self.find_first(x) # 99
+    if not node:
+      return    
+    node.prev.next=node.next
+    node.next.prev=node.prev
+    
 
   def remove_last(self, x):
-    count=self.find_last(x)
-    if count==-1:
+    node=self.find_last(x)
+    if not node:
       return
-    p=self._front.next
-    while count>0:
-      p=p.next
-      count-=1
-    p.prev.next=p.next
-    p.next.prev=p.prev
+    node.prev.next=node.next
+    node.next.prev=node.prev
 
-  def remove_all(self, x):
-    while self.find_first(x) != -1:
-      self.remove_first(x)
+  def remove_all(self, x): # x = 3
+    node=self._front.next
+    while node != self._rear: # [1,2,,5,3,5,3,3,]
+      if node.el==x:
+        self.remove(node)
+      node=node.next
+
 
   def takeout(self, n, m):
     answer=DoublyLinkedList()
-    n_count=n
-    m_count=m-n+1
-    p=self._front.next
-    while n_count>0:
-      p=p.next
-      n_count-=1
-    p.prev.next=p.next
-    p.next.prev=p.prev
-    while m_count>0:
-      answer.append(p.el)
-      p.prev.next=p.next
-      p.next.prev=p.prev
-      p=p.next
-      m_count-=1
+    n.prev.next=m.next
+    m.next.prev=n.prev
+    answer._front.next=n
+    n.prev=answer._front
+    answer._rear.prev=m
+    m.next=answer._rear
+   
     return answer
 
