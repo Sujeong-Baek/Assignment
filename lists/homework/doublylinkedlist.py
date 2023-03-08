@@ -107,6 +107,8 @@ class DoublyLinkedList:
 
   def remove_first(self, x):
     count=self.find_first(x)
+    if count==-1:
+      return
     p=self._front.next
     while count>0 :
       p=p.next
@@ -116,6 +118,8 @@ class DoublyLinkedList:
 
   def remove_last(self, x):
     count=self.find_last(x)
+    if count==-1:
+      return
     p=self._front.next
     while count>0:
       p=p.next
@@ -144,5 +148,4 @@ class DoublyLinkedList:
       p=p.next
       m_count-=1
     return answer
-
 
