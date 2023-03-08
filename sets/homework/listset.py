@@ -47,16 +47,26 @@ class set():
 
     def union(self, t):
         newSet = set()
-        newSet._data.extend(self._data)  # copy elements to new set
+        for el in self._data:
+            newSet.add(el)  
         for el in t:
             newSet.add(el)
         return newSet
 
     def intersection(self, t):
-        raise NotImplementedError
+        newSet = set()
+        for el in self._data:
+            if el in t:
+                newSet.add(el)
+        return newSet
 
     def difference(self, t):
-        raise NotImplementedError
+        newSet = set()
+        for el in self._data:
+            newSet.add(el)
+        for el in t:
+            newSet.discard(el)
+        return newSet        
 
     def __iter__(self):
         return _SetIterator(self._data)
