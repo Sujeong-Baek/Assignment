@@ -31,10 +31,10 @@ class CircularList:
             res+=p.el
             if p.next != self.front:
                 res+=", "
-            p=p.next
-            if p==self.front:
-                res+="]"
+            else:
                 break
+            p=p.next
+        res+="]"
         return res
     
     def remove(self, p):
@@ -59,17 +59,13 @@ class CircularList:
 
 
     def insert(self, p, el): 
-        el=Node(el)
+        el=Node(el,p,p.prev)
         p.prev.next=el
-        el.prev=p.prev
-        el.next=p
         p.prev=el
         
 
     def append(self, x):
-        x=Node(x)
+        x=Node(x,self.front,self.rear)
         self.front.prev=x
         self.rear.next=x
-        x.prev=self.rear
-        x.next=self.front
         self.rear=x
