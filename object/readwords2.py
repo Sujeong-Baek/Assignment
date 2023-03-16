@@ -4,7 +4,7 @@
 import time
 # from array import Array
 
-fname = r"C:\Users\zxcwl\Desktop\Python-assignment\object\words-1000.txt"
+fname = r"C:\Users\zxcwl\Desktop\Python-assignment\object\words-20000.txt"
 
 class Array():
     """An array with size slots"""

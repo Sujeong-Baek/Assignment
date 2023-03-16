@@ -2,7 +2,7 @@
 # A simple spell checker
 
 def read_words():
-    s = open("words.txt", "r")
+    s = open("C:\\Users\\zxcwl\\Desktop\\Python-assignment\\sets\\words.txt", "r")
     words = set()
     for w in s.readlines():
         words.add(w.strip())
