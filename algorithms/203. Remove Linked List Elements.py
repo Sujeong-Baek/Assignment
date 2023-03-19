@@ -5,13 +5,11 @@ class ListNode:
         self.next = next
 class Solution:
     def removeElements(self, head: ListNode, val: int) -> ListNode:
-        new=ListNode()
-        p=new
-        while head: 
-            if head.val==val:                
-                p.next=None
+        p = sentinel =ListNode()
+        p.next = head # []
+        while p and p.next: # 0
+            if p.next.val==val:                
+                p.next=p.next.next
             else:
-                p.next=head
                 p=p.next
-            head=head.next
-        return new.next
+        return sentinel.next
