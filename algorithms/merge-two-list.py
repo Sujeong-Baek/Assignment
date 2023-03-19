@@ -6,10 +6,9 @@ class ListNode:
 
 class Solution:
     def mergeTwoLists(self, list1: ListNode, list2: ListNode) ->ListNode:
-        new=ListNode()
-        p=new
-
-        while list1 != None and list2 != None:
+        p=sentinel=ListNode()
+       
+        while list1 and list2:
             if list1.val <= list2.val:
                 p.next=list1
                 list1=list1.next
@@ -17,11 +16,11 @@ class Solution:
                 p.next=list2
                 list2=list2.next
             p=p.next
-        if list1 != None:
+        if list1:
             p.next=list1
-        else:
+        if list2:
             p.next=list2
-        return new.next
+        return sentinel.next
 
 
 
