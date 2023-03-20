@@ -7,14 +7,12 @@ class ListNode:
 class Solution:
     def getDecimalValue(self, head: ListNode) -> int:
         p=head
-        length=0
-        answer=0
+        answer=exponent=0
 
-        while p:
+        while p.next:
             p=p.next
-            length+=1
+            exponent+=1
         
-        exponent=length-1
         while exponent>=0:
             if head.val:
                 answer+=2**exponent
