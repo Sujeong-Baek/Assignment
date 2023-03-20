@@ -1,4 +1,4 @@
-# Definition for singly-linked list.
+# https://leetcode.com/problems/intersection-of-two-linked-lists/
 class ListNode:
     def __init__(self, x):
         self.val = x
