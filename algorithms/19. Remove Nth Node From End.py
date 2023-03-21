@@ -6,3 +6,21 @@ class ListNode:
         self.next = next
 class Solution:
     def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+        length=0
+        p=head
+        sentinel=q=ListNode()
+        q.next=head
+        while p:
+            length+=1
+            p=p.next
+
+        count=length-n
+        while q and q.next:
+            if count!=0:    
+                q=q.next
+                print(sentinel)      
+            else:
+                q.next=q.next.next
+                print(sentinel)                
+            count-=1
+        return sentinel.next
