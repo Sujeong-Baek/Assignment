@@ -6,3 +6,12 @@ class ListNode:
         self.next = next
 class Solution:
     def middleNode(self, head: ListNode) -> ListNode:
+        p=head
+        length=0        
+        while p:
+            p=p.next
+            length+=1
+
+        for _ in range(length//2):
+            head=head.next
+        return head
