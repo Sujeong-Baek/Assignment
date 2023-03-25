@@ -1,4 +1,4 @@
-# Definition for singly-linked list.
+# https://leetcode.com/problems/intersection-of-two-linked-lists/
 class ListNode:
     def __init__(self, x):
         self.val = x
@@ -6,3 +6,13 @@ class ListNode:
 
 class Solution:
     def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> ListNode:
+        visited=set()
+        while headA:
+            visited.add(headA)
+            headA=headA.next
+
+        while headB:
+            if headB in visited:
+                return headB
+            headB=headB.next
+        return
