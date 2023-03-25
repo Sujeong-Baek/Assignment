@@ -16,11 +16,9 @@ class Solution:
 
         count=length-n
         while q and q.next:
-            if count!=0:    
-                q=q.next
-                print(sentinel)      
+            if count != 0:    
+                q=q.next                
             else:
-                q.next=q.next.next
-                print(sentinel)                
+                q.next=q.next.next                        
             count-=1
         return sentinel.next
