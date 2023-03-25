@@ -2,26 +2,26 @@
 class MyHashMap:
 
     def __init__(self):
-        self.hashmap=[]
+        self.data=[]
 
     def put(self, key: int, value: int) -> None:  
-        mapping=[key,value]
-        for i in range(len(self.hashmap)):
-            if self.hashmap[i][0]==key:
-                self.hashmap[i]=mapping
+        mapping=(key,value)
+        for i,(k, _) in enumerate(self.data):
+            if k ==key:
+                self.data[i]=mapping
                 return
-        self.hashmap.append(mapping)
+        self.data.append(mapping)
 
     def get(self, key: int) -> int:
-        for mapping in self.hashmap:
-            if key == mapping[0]:
-                return mapping[-1]
+        for k,v in self.data:
+            if key == k:
+                return v
         return -1
 
     def remove(self, key: int) -> None:
-        for mapping in self.hashmap:
-            if key ==mapping[0]:
-                self.hashmap.remove(mapping)
+        for i,(k,_) in enumerate(self.data):
+            if key ==k:
+                self.data.pop(i)
 
 # Your MyHashMap object will be instantiated and called as such:
 # obj = MyHashMap()
