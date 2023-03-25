@@ -1,19 +1,22 @@
 class Mydata:
     def __init__(self):
-        self.data=[]
-  
+        self.data=[[] for _ in range(10)]
 
     def add(self, key: int) -> None:
-        if not key in self.data:
-            self.data.append(key)
+        data = self.data[key%10]
+        if key not in data:
+            data.append(key)
 
     def remove(self, key: int) -> None:
-        for i, k in enumerate(self.data):
+        data = self.data[key%10]
+        for i, k in enumerate(data):
             if k == key:
-                self.data.pop(i)
+                data.pop(i)
 
     def contains(self, key: int) -> bool:
-        return key in self.data
+        return key in self.data[key%10]
 
 lst = [1,2,3,4]
 # lst.pop(2) >> 3
+
+# add(2), add(22) >> [2, 22]
