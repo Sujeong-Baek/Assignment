@@ -11,17 +11,17 @@ class Solution:
         p=answer
    
         while l1 or l2:
-            addnum=0
+            num=0
             if l1 and l1.val:
-                addnum+=l1.val
+                num+=l1.val
             if l1:
                 l1=l1.next
 
             if l2 and l2.val:
-                addnum+=l2.val
+                num+=l2.val
             if l2:
                 l2=l2.next
-            num = addnum + carry
+            num += carry
             carry, num = divmod(num, 10)
             p.next=ListNode(num)
             p=p.next
