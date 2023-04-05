@@ -4,14 +4,14 @@ def solution(polynomial):
     n=0
     answer=''
     p_list=polynomial.split()
-    for i in range(0,len(p_list),2):
-        if p_list[i].isdigit():
-            n+=int(p_list[i])
+    for p in p_list[::2]:
+        if p.isdigit():
+            n+=int(p)
         else:
-            if len(p_list[i])==1:
+            if len(p)==1:
                 x+=1
             else:
-                x+=int(p_list[i][:-1])
+                x+=int(p[:-1])
     if x:
         if not x==1:
             answer+=str(x)+'x'
