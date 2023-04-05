@@ -1,1 +1,0 @@
-# https://school.programmers.co.kr/learn/courses/30/lessons/120878/solution_groups?language=python3&type=my
