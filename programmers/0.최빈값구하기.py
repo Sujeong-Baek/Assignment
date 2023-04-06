@@ -1,18 +1,16 @@
 # https://school.programmers.co.kr/learn/courses/30/lessons/120812
+from collections import defaultdict
+
 def solution(array):
-    a_map={}
+    el2count = defaultdict(int)
     answer=[]
-    for a in array:
-        if not a in a_map:
-            a_map[a]=1
-        else:
-            a_map[a]+=1
+    for el in array:        
+        el2count[el]+=1
+    
+    max_count=max(el2count.values())
+ 
+    for el in el2count:
+        if el2count[el]==max_count:
+            answer.append(el)
 
-    max_a=max(a_map.values())
-    for key in a_map:
-        if a_map[key]==max_a:
-            answer.append(key)
-
-    if len(answer)>1:
-        return -1
-    return answer[0]
+    return -1 if len(answer)>1 else answer[0]
