@@ -2,8 +2,7 @@
 def solution(board):
     answer = 0
     boom_list=[]
-    dr=[-1,-1,-1,0,0,1,1,1]
-    dc=[-1,0,1,-1,1,-1,0,1]
+    drdc=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]]
     #폭탄을 찾고    
     for r in range(len(board)):
         for c in range(len(board)):
@@ -11,9 +10,8 @@ def solution(board):
                 boom_list.append((r,c))
     #주변 0을 1로 바꾸기        
     for r,c in boom_list:
-        for i in range(8):
-            nr=r+dr[i]
-            nc=c+dc[i]
+        for dr,dc in drdc:            
+            nr,nc=r+dr,c+dc
             if 0<=nr<len(board) and 0<=nc<len(board):
                 board[nr][nc]=1
     
