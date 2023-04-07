@@ -5,8 +5,7 @@ def solution(t, p):
     len_t=len(t)
     len_p=len(p)
     
-    for i in range(len_t):
-        if i+len_p<=len_t:
-            if int(t[i:i+len_p]) <=int(p):
-                count+=1
+    for i in range(len_t-len_p+1):        
+        if int(t[i:i+len_p]) <=int(p):
+            count+=1
     return count
