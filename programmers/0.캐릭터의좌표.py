@@ -5,7 +5,7 @@ def solution(keyinput, board):
 
     for key in keyinput:
         dr, dc = key2move[key][0],key2move[key][1]
-        nr,nc = r,c 
-        if abs(nr+dr)<=board[0]//2 and abs(nc+dc)<=board[1]//2:
-            r,c=nr+dr,nc+dc         
+        if abs(r+dr)<=board[0]//2 and abs(c+dc)<=board[1]//2:
+            r+=dr
+            c+=dc
     return [r,c]
