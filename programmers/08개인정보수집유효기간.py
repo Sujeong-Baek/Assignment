@@ -9,7 +9,6 @@ def solution(today, terms, privacies):
     for i, privacy in enumerate(privacies,1):
         day=calculator_date(terms, privacy)
         if today > datetime.date(day[0],day[1],day[2]):
-            print(today,datetime.date(day[0],day[1],day[2]))
             answer.append(i)        
     return answer
 
