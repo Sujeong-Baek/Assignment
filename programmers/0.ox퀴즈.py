@@ -5,15 +5,15 @@ def solution(quiz):
     #if구절로 +,-연산 =뒤에오는 숫자와 정답 비교하기
     #맞으면o 아니면 x
     for q in quiz:
-        q_list=q.split()        
-        if q_list[1] =="+":
-            ans=int(q_list[0])+int(q_list[2])
-        elif q_list[1] =="-":
-            ans=int(q_list[0])-int(q_list[2])
-            
-        if ans==int(q_list[-1]):
-            answer+="O"
+        x, op, y, _, z =q.split()
+        if op =="+":
+            ans=int(x)+int(y)
         else:
-            answer+="X"
-        
+            ans=int(x)-int(y)
+        if ans==int(z):
+            answer.append("O")
+        else:
+            answer.append("X")
     return answer
+
+# X [연산자] Y = Z # q: "3 - 4 = -3"
