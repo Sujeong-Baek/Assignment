@@ -51,13 +51,16 @@ class Board:
                     compare_num=self.nums[i][j]
                     self.nums[i][j]=0
                     self.nums[i][pos]=compare_num
+                    if j != pos:
+                        moved = True
                     pos+=1
                 elif compare_num==self.nums[i][j]:
                     self.nums[i][pos-1]=compare_num*2
                     self.nums[i][j]=0
                     compare_num=0
                     point+=compare_num*2
-        return point
+                    moved=True
+        return point, moved
 
     def push_right(self):
         """오른쪽으로 옮기기"""
@@ -237,3 +240,5 @@ def main():
 # [y][x]
 # (x, y)
 # row, column
+
+main()
