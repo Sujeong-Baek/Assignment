@@ -139,13 +139,13 @@ class Board:
 
     def push(self, direction):
         """lrud를 받아서 self.push_()를 리턴합니다"""
-        if direction == 'l':
+        if direction == 'a':
             return self.push_left()
-        if direction == 'r':
-            return self.push_right()
-        if direction == 'u':
-            return self.push_up()
         if direction == 'd':
+            return self.push_right()
+        if direction == 'w':
+            return self.push_up()
+        if direction == 's':
             return self.push_down()
 
     def is_full(self):
@@ -209,9 +209,9 @@ def main():
         print(f"{points} points\n")
         word = input("What is your move: ").lower().strip()
         print()
-        if len(word) != 1 or not word in "lrud":
+        if len(word) != 1 or not word in "wasd":
             continue
-        if len(word) == 1 and word in "lrud":
+        if len(word) == 1 and word in "wasd":
             point, moved =board.push(word)
             points+=point
             if moved:
