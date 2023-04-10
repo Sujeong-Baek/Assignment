@@ -4,16 +4,22 @@ def solution(sequence, k):
     #길이가 짧은 것
     #길이가 같은 경우 앞쪽에 나온 것
     #첫 인덱스와 마지막 인덱스 반환
-    len2index={}
-    for i in range(len(sequence)):      
-        sum_s=0
-        end=0+i
-        while sum_s<k and end<len(sequence):
-            sum_s+=sequence[end]
-            end+=1
-        if sum_s==k:
-            if end-1-i in len2index:
-                continue
-            len2index[end-1-i]=i,end-1
-                
-    return  len2index[min(len2index.keys())]
+    
+    answer=[]
+    cum_sum=[0]*(len(sequence)+1)
+    min_len=float('inf')
+    left=0
+    right=1
+    for i in range(1,len(cum_sum)):
+        cum_sum[i]=cum_sum[i-1]+sequence[i-1]
+    while right<len(cum_sum):
+        if cum_sum[right]-cum_sum[left]==k:
+            if right-left<min_len:
+                answer=[left,right-1]
+                min_len= right-left
+            left+=1
+        elif cum_sum[right]-cum_sum[left]<k:
+            right+=1
+        else:
+            left+=1
+    return answer
