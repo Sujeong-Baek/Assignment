@@ -5,28 +5,20 @@ def solution(today, terms, privacies):
     answer = [] 
     ty,tm,td=today.split('.')
     today=int(ty)*10000+int(tm)*100+int(td)
-    for i, privacy in enumerate(privacies,1):      
-        if today > calculator_date(terms, privacy):
+    
+    typ2month = defaultdict(int)
+    for term in terms:
+        t,month=term.split()
+        typ2month[t]=int(month)
+        
+    for i, privacy in enumerate(privacies,1):
+        month=typ2month[privacy[-1]]
+        if today >= calculator_date(month, privacy): 
             answer.append(i)        
     return answer
 
-#약관에해당하는 terms이용하여 날짜구하기
-def calculator_date(terms, privacy):
-    typ2month=defaultdict(int)
-    privacy, typ =privacy.split(" ")
-    privacy=privacy.split(".")
-    for term in terms:
-        t,month=term.split(" ")
-        typ2month[t]=month
-
-    DD=int(privacy[2])-1    
-    MM=int(privacy[1])+int(typ2month[typ])    
-    if DD==0:
-        DD=28
-        MM-=1
-        
-    YY=int(privacy[0])
-    if MM>12:
-        YY+=(MM-1)//12
-        MM=(MM-1)%12+1  
-    return YY*10000+MM*100+DD
+#약관 끝난 다음날 구하기
+def calculator_date(month, privacy):
+    py,pm,pd=map(int, privacy[:-1].split("."))
+    py+=(pm+month-1)//12      
+    return py*10000+ ((pm+month-1)%12+1)*100+pd
