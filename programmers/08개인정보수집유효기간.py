@@ -1,14 +1,12 @@
 # https://school.programmers.co.kr/learn/courses/30/lessons/150370#
 from collections import defaultdict
-import datetime
 
 def solution(today, terms, privacies):
     answer = [] 
-    today=today.split('.')
-    today=datetime.date(int(today[0]),int(today[1]),int(today[2]))
-    for i, privacy in enumerate(privacies,1):
-        day=calculator_date(terms, privacy)
-        if today > datetime.date(day[0],day[1],day[2]):
+    ty,tm,td=today.split('.')
+    today=int(ty)*10000+int(tm)*100+int(td)
+    for i, privacy in enumerate(privacies,1):      
+        if today > calculator_date(terms, privacy):
             answer.append(i)        
     return answer
 
@@ -31,4 +29,4 @@ def calculator_date(terms, privacy):
     if MM>12:
         YY+=(MM-1)//12
         MM=(MM-1)%12+1  
-    return YY,MM,DD
+    return YY*10000+MM*100+DD
