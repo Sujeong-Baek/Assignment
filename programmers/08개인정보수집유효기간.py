@@ -15,7 +15,7 @@ def solution(today, terms, privacies):
         month = term2month[term]
         if today_num >= calculator_date(month, date): 
             answer.append(i)        
-    return answer if answer else -1
+    return answer
 
 def date2num(date):
     year, month, day = date.split('.')
