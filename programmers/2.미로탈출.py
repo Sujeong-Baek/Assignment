@@ -6,15 +6,15 @@ EXIT='E'
 WALL='X'
 
 def find_index(maps):
-    for i in range(len(maps)):
-        for j in range(len(maps[0])):
-            if maps[i][j] == START:
-                sx, sy = i, j
-            elif maps[i][j] == LEVER:
-                lx, ly = i, j
-            elif maps[i][j] == EXIT:
-                ex, ey = i, j
-    return sx, sy, lx, ly, ex, ey
+    for i, row in enumerate(maps):
+        for j, el in enumerate(row):
+            if el == START:
+                sr, sc = i, j
+            elif el == LEVER:
+                lr, lc = i, j
+            elif el == EXIT:
+                er, ec = i, j
+    return sr, sc, lr, lc, er, ec
 
 def bfs(maps, sr, sc, er, ec):
     R, C = len(maps),len(maps[0])
