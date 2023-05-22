@@ -2,11 +2,11 @@
 def solution(targets):
     targets=sorted(targets)
     count = 0
-    interception = {'s' : 0, 'e' : 0}
+    min_end= 0
     for s, e in targets:
-        if interception['e'] <=s:
+        if min_end <= s:
             count += 1
-            interception = {'s' : s, 'e' : e}
+            min_end = e
         else:
-            interception = {'s' : max(interception['s'], s), 'e' : min(interception['e'], e)}
+            min_end =  min(min_end, e)
     return count
