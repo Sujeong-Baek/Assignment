@@ -30,9 +30,7 @@ def bfs(board, rr, rc):
             if (nr,nc) not in visited:
                 visited.add((nr,nc))
                 queue.append((nr,nc,time+1))
-            # -1 = nr or nr == R or nc == -1 or nc == C or board[nr][nc] == OBSTACLE:
-            
-            
+            # -1 = nr or nr == R or nc == -1 or nc == C or board[nr][nc] == OBSTACLE:            
     return -1
 
 
