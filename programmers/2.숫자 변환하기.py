@@ -11,15 +11,9 @@ def solution(x, y, n):
         x, time = q.popleft()
         if x == y:
             return time
-        for sign, num in [("+", n), ("*", 2), ("*", 3)]:
-            if sign == "+":
-                nx=x+num
-            elif sign == "*":
-                nx=x*num
-            if nx > y :
+        for num in [x + n, 2*x, 3*x]:
+            if num in visited:
                 continue
-            if nx in visited:
-                continue
-            visited.add(nx)
-            q.append((nx,time+1))
+            visited.add(num)
+            q.append((num,time+1))
     return -1
