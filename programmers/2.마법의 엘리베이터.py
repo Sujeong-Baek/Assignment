@@ -4,11 +4,14 @@ def solution(storey):
 
     while storey:
         units = storey % 10  
-        if units >= 5:
+        if units > 5:
             answer += (10 - units)
             storey += 10
-        else:
+        elif units < 5:
             answer += units    
-            
+        else:
+            if (storey//10)%10 >= 5:
+                storey += 10
+            answer+=units
         storey //= 10
     return answer
