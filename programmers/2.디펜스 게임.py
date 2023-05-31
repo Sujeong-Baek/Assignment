@@ -7,13 +7,15 @@ def solution(n, k, enemy):
         if k>0:
             heappush(hq, e)
             k-=1
-            answer+=1
         else:
-            a=heappop(hq)
-            if n-a >=0:
-                n-=a
-                heappush(hq,e)
-                answer+=1
+            min_e=heappop(hq)
+            if e<min_e and n-e>=0:
+                heappush(hq, min_e)
+                n-=e
+            elif e>min_e and n-min_e>=0:
+                heappush(hq, e)
+                n-=min_e                   
             else:
                 break
+        answer+=1
     return answer
