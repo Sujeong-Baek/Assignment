@@ -12,7 +12,7 @@ def solution(n, k, enemy):
             if e<min_e and n-e>=0:
                 heappush(hq, min_e)
                 n-=e
-            elif e>min_e and n-min_e>=0:
+            elif e>=min_e and n-min_e>=0:
                 heappush(hq, e)
                 n-=min_e                   
             else:
