@@ -2,16 +2,14 @@
 from collections import defaultdict
 def solution(weights):
     answer = 0
-    multiple2idxweights = defaultdict(list)    
+    multiple2idxs = defaultdict(set)    
     for idx, w in enumerate(weights):
-        idxweights=set() # {} : dictionary
+        idxs=set() # {} : dictionary
         for dis in [2,3,4]:
-            multiple = w * dis
-            if multiple in multiple2idxweights:
-                for idxweight in multiple2idxweights[multiple]:
-                    idxweights.add(idxweight)
-            multiple2idxweights[multiple].append((idx, w))
-        answer+=len(idxweight)
+            multiple = w * dis      
+            idxs = idxs.union(multiple2idxs[multiple])
+            multiple2idxs[multiple].add(idx)
+        answer+=len(idxs)
     return answer
 
 # [100,200,100, 100]
