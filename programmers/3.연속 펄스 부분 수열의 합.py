@@ -7,13 +7,10 @@ def solution(sequence):
     tmp2=[0]
     for idx, s in enumerate(sequence, 1):
         seq1.append(s*(-1)**idx)
+        tmp1.append(tmp1[-1]+ seq1[idx-1])
+        
         seq2.append(s*(-1)**(idx+1))
-        
-    for s in seq1:
-        tmp1.append(tmp1[-1]+s)
-        
-    for s in seq2:
-        tmp2.append(tmp1[-1]+s)
+        tmp2.append(tmp2[-1]+seq2[idx-1])
 
     for i in range(len(tmp1)):
         for j in range(i+1, len(tmp1)):
