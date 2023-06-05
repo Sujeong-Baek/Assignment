@@ -1,23 +1,20 @@
 # https://school.programmers.co.kr/learn/courses/30/lessons/161988
-def solution(sequence):
-    answer1, answer2 = 0, 0
-    seq1=[]
-    tmp1=[0]
+def solution(sequence): 
+    seq1=[] 
     seq2=[]
-    tmp2=[0]
-    for idx, s in enumerate(sequence, 1):
-        seq1.append(s*(-1)**idx)
-        tmp1.append(tmp1[-1]+ seq1[idx-1])
-        
-        seq2.append(s*(-1)**(idx+1))
-        tmp2.append(tmp2[-1]+seq2[idx-1])
 
-    for i in range(len(tmp1)):
-        for j in range(i+1, len(tmp1)):
-            answer1 = max(answer1, tmp1[j] - tmp1[i])
-            
-    for i in range(len(tmp2)):
-        for j in range(i+1, len(tmp2)):
-            answer2 = max(answer2, tmp2[j] - tmp2[i])
-        
-    return max(answer1, answer2)    
+    for idx, s in enumerate(sequence):
+        seq1.append(s*(-1)**idx)        
+        seq2.append(s*(-1)**(idx+1))
+    
+    max_here1=max_whole1=0
+    for s1 in seq1:        
+        max_here1=max(s1, max_here1+s1)
+        max_whole1=max(max_here1, max_whole1)
+    
+    max_here2=max_whole2=0
+    for s2 in seq2:        
+        max_here2=max(s2, max_here2+s2)
+        max_whole2=max(max_here2, max_whole2)
+
+    return max(max_whole1, max_whole2) 
